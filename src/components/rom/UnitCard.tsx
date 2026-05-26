@@ -1,43 +1,43 @@
 import RomDataGraph from './RomDataGraph';
 
-import neck_fold_left from '../assets/neck_fold_left.png';
-import neck_fold_right from '../assets/neck_fold_right.png';
-import neck_side_fold from '../assets/neck_side_fold.png';
-import neck_side_unfold from '../assets/neck_side_unfold.png';
+import neck_fold_left from '../../assets/neck_fold_left.png';
+import neck_fold_right from '../../assets/neck_fold_right.png';
+import neck_side_fold from '../../assets/neck_side_fold.png';
+import neck_side_unfold from '../../assets/neck_side_unfold.png';
 
-import shoulder_external_rotate_left from '../assets/shoulder_external_rotate_left.png';
-import shoulder_external_rotate_right from '../assets/shoulder_external_rotate_right.png';
-import shoulder_front_open_left from '../assets/shoulder_front_open_left.png';
-import shoulder_front_open_right from '../assets/shoulder_front_open_right.png';
-import shoulder_internal_rotate_left from '../assets/shoulder_internal_rotate_left.png';
-import shoulder_internal_rotate_right from '../assets/shoulder_internal_rotate_right.png';
-import shoulder_side_front_fold_left from '../assets/shoulder_side_front_fold_left.png';
-import shoulder_side_front_fold_right from '../assets/shoulder_side_front_fold_right.png';
-import shoulder_side_front_unfold_left from '../assets/shoulder_side_front_unfold_left.png';
-import shoulder_side_front_unfold_right from '../assets/shoulder_side_front_unfold_right.png';
+import shoulder_external_rotate_left from '../../assets/shoulder_external_rotate_left.png';
+import shoulder_external_rotate_right from '../../assets/shoulder_external_rotate_right.png';
+import shoulder_front_open_left from '../../assets/shoulder_front_open_left.png';
+import shoulder_front_open_right from '../../assets/shoulder_front_open_right.png';
+import shoulder_internal_rotate_left from '../../assets/shoulder_internal_rotate_left.png';
+import shoulder_internal_rotate_right from '../../assets/shoulder_internal_rotate_right.png';
+import shoulder_side_front_fold_left from '../../assets/shoulder_side_front_fold_left.png';
+import shoulder_side_front_fold_right from '../../assets/shoulder_side_front_fold_right.png';
+import shoulder_side_front_unfold_left from '../../assets/shoulder_side_front_unfold_left.png';
+import shoulder_side_front_unfold_right from '../../assets/shoulder_side_front_unfold_right.png';
 
-import elbow_side_fold_left from '../assets/elbow_side_fold_left.png';
-import elbow_side_fold_right from '../assets/elbow_side_fold_right.png';
+import elbow_side_fold_left from '../../assets/elbow_side_fold_left.png';
+import elbow_side_fold_right from '../../assets/elbow_side_fold_right.png';
 
-import abdomen_front_left from '../assets/abdomen_front_left.png';
-import abdomen_front_right from '../assets/abdomen_front_right.png';
-import abdomen_side_fold from '../assets/abdomen_side_fold.png';
-import abdomen_side_unfold from '../assets/abdomen_side_unfold.png';
+import abdomen_front_left from '../../assets/abdomen_front_left.png';
+import abdomen_front_right from '../../assets/abdomen_front_right.png';
+import abdomen_side_fold from '../../assets/abdomen_side_fold.png';
+import abdomen_side_unfold from '../../assets/abdomen_side_unfold.png';
 
-import pelivs_front_open_left from '../assets/pelvis_front_open_left.png';
-import pelvis_front_open_right from '../assets/pelvis_front_open_right.png';
-import pelvis_side_fold_left from '../assets/pelvis_side_fold_left.png';
-import pelvis_side_fold_right from '../assets/pelvis_side_fold_right.png';
-import pelvis_side_unfold_left from '../assets/pelvis_side_unfold_left.png';
-import pelvis_side_unfold_right from '../assets/pelvis_side_unfold_right.png';
+import pelivs_front_open_left from '../../assets/pelvis_front_open_left.png';
+import pelvis_front_open_right from '../../assets/pelvis_front_open_right.png';
+import pelvis_side_fold_left from '../../assets/pelvis_side_fold_left.png';
+import pelvis_side_fold_right from '../../assets/pelvis_side_fold_right.png';
+import pelvis_side_unfold_left from '../../assets/pelvis_side_unfold_left.png';
+import pelvis_side_unfold_right from '../../assets/pelvis_side_unfold_right.png';
 
-import knee_fold_left from '../assets/knee_fold_left.png';
-import knee_fold_right from '../assets/knee_fold_right.png';
+import knee_fold_left from '../../assets/knee_fold_left.png';
+import knee_fold_right from '../../assets/knee_fold_right.png';
 
-import ankle_side_instep_fold_left from '../assets/ankle_side_instep_fold_left.png';
-import ankle_side_instep_fold_right from '../assets/ankle_side_instep_fold_right.png';
-import ankle_side_sole_fold_left from '../assets/ankle_side_sole_fold_left.png';
-import ankle_side_sole_fold_right from '../assets/ankle_side_sole_fold_right.png';
+import ankle_side_instep_fold_left from '../../assets/ankle_side_instep_fold_left.png';
+import ankle_side_instep_fold_right from '../../assets/ankle_side_instep_fold_right.png';
+import ankle_side_sole_fold_left from '../../assets/ankle_side_sole_fold_left.png';
+import ankle_side_sole_fold_right from '../../assets/ankle_side_sole_fold_right.png';
 import type { IRomDetail, titles } from '../../types/rom';
 import { useGetRomGraph } from '../../hooks/rom/useGetRomGraph';
 
@@ -88,11 +88,11 @@ const getLevelValue = (value: number, data: IRomDetail) => {
   if (value >= data.normal_normal) {
     return 'text-accent '; // level 3
   } else if (value >= data.normal_warning) {
-    return 'text-greenn '; // level 2
+    return 'text-greenn'; // level 2
   } else if (value >= data.normal_bad) {
-    return 'text-orangee '; // level 1
+    return 'text-orangee-600 '; // level 1
   } else {
-    return 'text-redd '; // level 0
+    return 'text-redd-600 '; // level 0
   }
 };
 const getBgLevelValue = (value: number, data: IRomDetail) => {
@@ -101,17 +101,17 @@ const getBgLevelValue = (value: number, data: IRomDetail) => {
   } else if (value >= data.normal_warning) {
     return 'bg-greenn '; // level 2
   } else if (value >= data.normal_bad) {
-    return 'bg-orangee '; // level 1
+    return 'bg-orangee-600 '; // level 1
   } else {
-    return 'bg-redd '; // level 0
+    return 'bg-redd-600 '; // level 0
   }
 };
 
 export default function UnitCard({ data }: { data: IRomDetail }) {
 
   const stateBarColor = {
-    0: "bg-redd/75 w-[23.9%]",
-    1: "bg-orangee/75 w-[48.9%]",
+    0: "bg-redd-600/75 w-[23.9%]",
+    1: "bg-orangee-600/75 w-[48.9%]",
     2: "bg-greenn/75 w-[73.9%]",
     3: "bg-accent/75 w-[98.9%]"
   } [data.score];
@@ -125,7 +125,7 @@ export default function UnitCard({ data }: { data: IRomDetail }) {
     <div className="w-full h-full flex flex-col gap-2 rounded-xl border border-sub-400  p-1">
       {/* 1. 타이틀 영역 */}
       <div className="flex text-sm font-bold gap-2 mt-2 ml-2 items-center ">
-        <div className='w-4 h-4 rounded-sm bg-accent' />
+        <div className='w-4 h-4 rounded-[2px] bg-accent' />
         {data.title}
       </div>
 
@@ -139,12 +139,12 @@ export default function UnitCard({ data }: { data: IRomDetail }) {
           <div className='flex justify-between items-end'>
             <p className="text-sm font-bold text-sub-800">최대각도: <span className="text-sub-800 font-bold">{data.value_1_max.toFixed(1)}°</span></p>
           </div>
-          <p className="text-[10px] text-gray-500 leading-tight line-clamp-2 h-[24px] overflow-hidden">
+          <p className="text-[10px] text-sub-600 leading-tight line-clamp-2 h-[24px] overflow-hidden text-start">
             {data.description}
           </p>
 
           {/* 상단 텍스트 공간 확보를 위해 pt-12 정도로 늘립니다. */}
-          <div className="relative w-full pt-8 px-2"> 
+          <div className="relative w-full pt-8 print:pt-6 px-2"> 
             {/* 레이블과 각도값을 묶어서 상단에 배치 */}
             <div className="absolute top-0 w-full flex justify-between px-1">
               {/* 각 섹션(1/4)을 flex-col로 묶어 수직 정렬 */}
@@ -201,8 +201,8 @@ export default function UnitCard({ data }: { data: IRomDetail }) {
                 
                 {date && value !== undefined ? 
                 <div className='min-w-[44px] flex items-center px-1 py-1 gap-1 leading-none '>
-                  <div className={`w-2 h-2 rounded-sm ${getBgLevelValue(value, data)}`} />
-                  <div className={` rounded-md  text-[10px] font-semibold text-center ${getLevelValue(value, data)}`}>
+                  <div className={`w-2 h-2 rounded-[2px] ${getBgLevelValue(value, data)}`} />
+                  <div className={` rounded-[4px]  text-[10px] font-semibold text-center ${getLevelValue(value, data)}`}>
                     {value !== null ? `${value.toFixed(1)}°` : " "}
                   </div>
                 </div> : 

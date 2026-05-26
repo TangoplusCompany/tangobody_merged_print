@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { usePostRomData } from "../../hooks/rom/usePostRomData";
-import logoWhite from './assets/logo_white.png';
+import logoWhite from '../../assets/logo_white.png';
 import UnitCardContainer from "./UnitCardContainer";
 
 export interface IRomAppProps {
@@ -32,7 +32,7 @@ export function RomApp({ t_r }: IRomAppProps) {
   }
 
   return (
-    <div className="a4-page flex flex-col bg-white">
+    <div className="pt-6 pb-20 min-h-screen print:p-0 print:bg-white">
         {chunkedPages.map((pageItems, pageIndex) => (
         <div key={pageIndex} className="a4-page relative flex flex-col bg-white mb-8 print:mb-0 w-[210mm] mx-auto">
           <table className="w-full border-collapse" style={{ tableLayout: 'fixed' }}>

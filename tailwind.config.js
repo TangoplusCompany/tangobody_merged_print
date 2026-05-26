@@ -13,15 +13,27 @@ export default {
       colors: {
         'accent' : '#5B93FF',
         'blackk' : '#7A828A',
-        'redd': '#FF766C',
-        'orangee' : '#FFA546',
+        'redd': {
+          400: '#FF7474',
+          600: '#FF4A4A',
+          500: '#FF766C',
+          800: '#953442'
+        },
+        'orangee' : {
+          400: '#FFD7A5',
+          600: '#FFA73A',
+          500: '#FFA546',
+          800: '#CC7B1C'
+        },
+        'greenn': '#00E006',
         'sub': {
           800: '#454545',
           600: '#7E7E7E',
           400: '#AEAEAE',
-          300: '#C1C1C1',
-          200: '#DBDBDB',
-          100: '#f4f4f4cc',
+          300: '#BFBFBF',
+          200: '#DCDCDC',
+          150: '#EDEDED',
+          100: '#F8F8F8',
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

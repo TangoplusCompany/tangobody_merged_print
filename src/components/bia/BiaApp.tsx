@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { usePostBiaData } from "../../hooks/bia/usePostBiaData";
-import logoWhite from './assets/logo_white.png';
+import logoWhite from '../../assets/logo_white.png';
 import Composition from "./left/Composition";
 import MainAnalysis from "./left/MainAnalysis";
 import BodyModel from "./left/BodyModel";

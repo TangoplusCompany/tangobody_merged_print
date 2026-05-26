@@ -1,11 +1,9 @@
 export interface IReportDetail {
-  measure_info: IBasicInfo;
-  image_data: IBasicImage;
-  angle_data: IBasicAngle;
-  figure_data: IBasicFigure;
-  summary_data: IBasicSummary[];
-  detail_data: IBasicPart;
-  result_ment_summary: string;
+  result_summary_data: IBasicInfo
+  result_history_data: IBasicHistory
+  static_mat_data: IBasicStaticMat
+  dynamic_mat_data: IBasicDynamicMat
+  detail_data: IBasicCards
 }
 
 export interface IBasicInfo {
@@ -15,7 +13,48 @@ export interface IBasicInfo {
   user_sn: number;
   user_name: string;
   gender: string;
-  t_score: number;
+  mobile: string,
+  camera_orientation: 0 | 1;
+  mat_ohs_bottom_pressure: number;
+  mat_ohs_left_bottom: number;
+  mat_ohs_left_pressure: number;
+  mat_ohs_left_top: number;
+  mat_ohs_right_bottom: number;
+  mat_ohs_right_pressure: number;
+  mat_ohs_right_top: number;
+  mat_ohs_top_pressure: number;
+  mat_static_bottom_pressure: number;
+  mat_static_left_bottom : number; 
+  mat_static_left_pressure: number;
+  mat_static_left_top: number;
+  mat_static_range_level: number;
+  mat_static_right_bottom: number;
+  mat_static_right_pressure: number;
+  mat_static_right_top: number;
+  mat_static_risk_level: number;
+  mat_static_top_pressure: number;
+  range_level_ankle: number;
+  range_level_elbow: number;
+  range_level_hip: number;
+  range_level_knee: number;
+  range_level_neck: number;
+  range_level_shoulder: number;
+
+
+  risk_level_ankle: number;
+  risk_level_elbow: number;
+  risk_level_hip: number;
+  risk_level_knee: number;
+  risk_level_neck: number;
+  risk_level_shoulder: number;
+
+  risk_lower_ment: string
+  risk_lower_range_level: number;
+  risk_lower_risk_level: number;
+  risk_upper_ment: string;
+  risk_upper_range_level: number;
+  risk_upper_risk_level: number;
+
   risk_neck: string;
   risk_shoulder_left: string;
   risk_shoulder_right: string;
@@ -32,128 +71,95 @@ export interface IBasicInfo {
   risk_result_ment: string;
 }
 
-export interface IBasicImage {
-  static_front: string;
-  static_left: string;
-  static_right: string;
-  static_back: string;
-  static_back_sit: string;
+export interface IBasicStaticMat {
+  mat_static_horizontal_ment: string;
+  mat_static_vertical_ment: string;
+  measure_server_mat_image_name: string;
+  measure_server_mat_json_name: string;
 }
 
-export interface IBasicAngle {
-  upper_body_balance: {
-    front: number;
-    back: number;
-    back_sit: number;
-  };
-  pelvis_balance: {
-    front: number;
-    back: number;
-    back_sit: number;
-  };
-  bowleg: {
-    front_1: number;
-    front_2: number;
-    left_side: number;
-    right_side: number;
-  };
-  elbow: {
-    front_1: number;
-    front_2: number;
-    left_side: number;
-    right_side: number;
-  };
-  spine_balance: {
-    left_shoulder: number;
-    left_hip: number;
-    right_shoulder: number;
-    right_hip: number;
-  };
-  turtle_neck: {
-    left: number;
-    right: number;
-  };
-  round_shoulder: {
-    left: number;
-    right: number;
-  };
-  scoliosis: {
-    back_shoulder: number;
-    back_hip: number;
-    back_shul_center_hip: number;
-    back_sit_shoulder: number;
-    back_sit_hip: number;
-    back_sit_shul_center_hip: number;
-  };
+export interface IBasicDynamicMat {
+  mat_hip_down_image_name: string;
+  mat_hip_trajectory_image_name: string;
+  mat_left_knee_trajectory_image_name: string;
+  mat_right_knee_trajectory_image_name: string;
+  mat_ohs_horizontal_ment: string;
+  mat_ohs_vertical_ment: string;
+  mat_ohs_knee_ment: string;
 }
 
-export interface IBasicFigure {
-  // 상체 기울기
-  upper_body_tilt: {
-    front_shoulder_angle: number; // 정면 어깨 각도
-    back_shoulder_angle: number; // 후면 어깨 각도
-  };
-  // 골반 측만
-  pelvic_scoliosis: {
-    back_pelvis_angle: number; // 후면 골반 각도
-    back_sit_pelvis_angle: number; // 앉은 자세 골반 각도
-  };
-  // 다리 변형
-  leg_deformity: {
-    left_hip_knee_ankle_angle: number; // 왼쪽 엉덩이-무릎-발목 각도
-    right_hip_knee_ankle_angle: number; // 오른쪽 엉덩이-무릎-발목 각도
-  };
-  // 팔꿈치 스트레스
-  elbow_stress: {
-    left_shoulder_elbow_wrist_angle: number; // 왼쪽 어깨-팔꿈치-손목 각도
-    right_shoulder_elbow_wrist_angle: number; // 오른쪽 어깨-팔꿈치-손목 각도
-  };
-  // 전방 전위
-  body_forward_thrust: {
-    shoulder_distance_avg: number; // 어깨 평균 거리
-    hip_distance_avg: number; // 엉덩이 평균 거리
-  };
-  // 거북목
-  text_neck: {
-    left_nose_shoulder_angle: number; // 왼쪽 코-어깨 각도
-    right_nose_shoulder_angle: number; // 오른쪽 코-어깨 각도
-  };
-  // 둥근 어깨
-  round_shoulder: {
-    left_shoulder_distance: number; // 왼쪽 어깨 거리
-    right_shoulder_distance: number; // 오른쪽 어깨 거리
-  };
-  // 척추 측만
-  scoliosis: {
-    back_shoulder_pevis_center_angle: number; // 후면 어깨-골반 중심 각도
-    back_sit_shoulder_pevis_center_angle: number; // 앉은 자세 어깨-골반 중심 각도
-  };
+
+
+export interface IBasicHistory {
+  count : number;
+  history_data: IBasicHistoryUnit[];
+}
+export interface IBasicHistoryUnit {
+  measure_date: string;
+  range_level_ankle: number;
+  range_level_elbow: number;
+  range_level_hip: number;
+  range_level_knee: number;
+  range_level_neck: number;
+  range_level_shoulder: number;
+  risk_level_ankle: number;
+  risk_level_elbow: number;
+  risk_level_hip: number;
+  risk_level_knee: number;
+  risk_level_neck: number;
+  risk_level_shoulder: number;
 }
 
-export interface IBasicSummary {
-  measure_category: string;
-  ment_all: string;
-  risk_level: number;
+export interface IBasicCards {
+  neck: IBasicCardNeck;
+  shoulder: IBasicCardShoulder;
+  elbow: IBasicCardElbow;
+  hip: IBasicCardHip;
+  knee: IBasicCardKnee;
+  ankle: IBasicCardAnkle;
 }
 
-export interface IBasicPart {
-  neck: IBasicPartData;
-  shoulder: IBasicPartData;
-  elbow: IBasicPartData;
-  hip: IBasicPartData;
-  knee: IBasicPartData;
-  ankle: IBasicPartData;
-}
 
-export interface IBasicPartData {
-  ment: string;
-  ment_all: string;
-  risk_level: number;
-  left_right: number;
+export interface IBasicCardUnit {
+  measure_type: number;
+  landmark: number;
   data: number;
-  description: string;
-  disorder: string;
-  exercise: string;
-  left_data: number;
-  right_data: number;
+  risk_level: number;
+  range_level: number;
+  measure_unit: string;
 }
+
+export interface IBasicCardNeck {
+  turtle_neck: IBasicCardUnit;
+  scoliosis: IBasicCardUnit;
+  side_neck_balance: IBasicCardUnit;
+}
+
+export interface IBasicCardShoulder {
+  shoulder_tilit: IBasicCardUnit;
+  forzen_shoulder: IBasicCardUnit;
+  shoulder_impingement: IBasicCardUnit;
+}
+
+export interface IBasicCardElbow {
+  bicep_tension: IBasicCardUnit;
+  elbow_disorder: IBasicCardUnit;
+  elbow_muscle_tension: IBasicCardUnit;
+}
+
+export interface IBasicCardHip {
+  hip_tilit: IBasicCardUnit;
+  hip_disorder: IBasicCardUnit;
+  hip_knee_tilit: IBasicCardUnit;
+}
+export interface IBasicCardKnee {
+  knee_angle: IBasicCardUnit;
+  knee_disorder: IBasicCardUnit;
+  hip_knee_ankle_tilit: IBasicCardUnit;
+}
+export interface IBasicCardAnkle {
+  ankle_angle: IBasicCardUnit;
+  left_right_balance: IBasicCardUnit;
+  uppper_lower_balance: IBasicCardUnit;
+}
+

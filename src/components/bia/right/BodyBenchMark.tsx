@@ -1,13 +1,13 @@
 import type { IBodyBenchmark } from '../../../types/bia';
-import bt1 from '../../assets/bt_1.png';
-import bt2 from '../../assets/bt_2.png';
-import bt3 from '../../assets/bt_3.png';
-import bt4 from '../../assets/bt_4.png';
-import bt5 from '../../assets/bt_5.png';
-import bt6 from '../../assets/bt_6.png';
-import bt7 from '../../assets/bt_7.png';
-import bt8 from '../../assets/bt_8.png';
-import bt9 from '../../assets/bt_9.png';
+import bt1 from '../../../assets/bt_1.png';
+import bt2 from '../../../assets/bt_2.png';
+import bt3 from '../../../assets/bt_3.png';
+import bt4 from '../../../assets/bt_4.png';
+import bt5 from '../../../assets/bt_5.png';
+import bt6 from '../../../assets/bt_6.png';
+import bt7 from '../../../assets/bt_7.png';
+import bt8 from '../../../assets/bt_8.png';
+import bt9 from '../../../assets/bt_9.png';
 
 
 interface MetricItem {
