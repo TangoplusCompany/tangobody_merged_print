@@ -61,7 +61,7 @@ export function AnalysisHorizonCard({ title, value, low, high }: AnalysisHorizon
   return (
     <div className="flex h-full items-center gap-1 w-full ">
       {/* 타이틀 박스 */}
-      <div className={`flex items-center h-full p-2 w-14 text-[10px] leading-tight font-bold text-white rounded-sm justify-center bg-sub-300`}>
+      <div className={`flex items-center h-full p-2 w-14 text-[10px] leading-tight font-bold text-white rounded-[4px] justify-center bg-sub-300`}>
         {title}
       </div>
 
@@ -84,7 +84,7 @@ export function AnalysisHorizonCard({ title, value, low, high }: AnalysisHorizon
           <div className="flex flex-col flex-1 gap-1.5 z-10">
             {/* 현재 값 막대 */}
             <div 
-              className={`relative h-3 rounded-r-sm transition-all duration-700 ease-out}`}
+              className={`relative h-3 rounded-r-[4px] transition-all duration-700 ease-out}`}
               style={{ width: `${currentPos}%`, backgroundImage: `linear-gradient(to right, ${COLORS.sub300}, ${endColor})` }}
             />
           
@@ -111,12 +111,12 @@ interface IAnalysisCardProps {
 }
 
 const labelMap = { 1: "보통", 2: "주의", 3: "위험" };
-const labelBgMap = { 1: "bg-sub-300", 2: "bg-orangee", 3: "bg-redd" };
+const labelBgMap = { 1: "bg-sub-300", 2: "bg-orangee-500", 3: "bg-redd-500" };
 const AnalysisCard = ({ label, value, unit, grade }: IAnalysisCardProps) => {
   const statusLabel = labelMap[grade as keyof typeof labelMap];
 
   return (
-    <div className="bg-sub-100 border border-sub-200 rounded-sm py-1 flex flex-col items-center gap-1 leading-[2.0]">
+    <div className="bg-sub-100 border border-sub-200 rounded-[3px] py-1 flex flex-col items-center gap-1 leading-[2.0]">
       {/* 라벨 */}
       <span className="text-[10px] font-bold text-sub-800 mb-0.5">{label}</span>
       
@@ -135,7 +135,7 @@ const AnalysisCard = ({ label, value, unit, grade }: IAnalysisCardProps) => {
       </div> */}
 
       {/* 하단 등급 표시 */}
-      <div className={`mt-0.5 px-1 ${labelBgMap[grade as keyof typeof labelMap]} rounded-sm text-white text-[10px] font-bold text-center`}>
+      <div className={`mt-0.5 px-1 ${labelBgMap[grade as keyof typeof labelMap]} rounded-[3px] text-white text-[10px] font-bold text-center`}>
         {statusLabel}
       </div>
     </div>
@@ -183,8 +183,8 @@ const muscleMassIndex = (() => {
     <div className="grid grid-cols-2 w-full gap-2">
       
       <div className="grid grid-rows-[40%_60%] h-full justify-center">
-        <div className="grid grid-cols-[25%_75%] gap-3 items-center">
-          <div className="w-14 h-14 bg-sub-100 rounded-2xl border-2 border-sub-200 flex justify-center">
+        <div className="grid grid-cols-[25%_75%] items-center">
+          <div className="h-20 w-20 print:w-14 print:h-14 bg-sub-100 rounded-2xl border-2 border-sub-200 flex justify-center">
             <span 
               className="text-[52px] font-bebas font-bold text-sub-200 leading-none flex items-center mt-2" 
               style={{ WebkitTextStroke: '1px #7E7E7E' }}
@@ -195,7 +195,7 @@ const muscleMassIndex = (() => {
 
           <div className="text-sub-800 flex flex-col">
             <span className="text-sm font-bold">{typeTitle}</span>
-            <span className="text-[10px] leading-[1.3] break-keep ">{data.result_cid_comment}</span>
+            <span className="text-[10px] leading-[1.3] break-keep">{data.result_cid_comment}</span>
           </div>
         </div>
 
@@ -225,9 +225,9 @@ const muscleMassIndex = (() => {
       </div>
 
       <div className="grid grid-rows-[40%_60%]">
-        <div className="flex flex-col flex-1 bg-sub-100 border border-sub-200 rounded-sm py-1 px-2">
+        <div className="flex flex-col flex-1 bg-sub-100 border border-sub-200 rounded-[2px] py-1 px-2">
             <div className="flex items-center gap-2 ">
-              <div className="w-3 h-3 rounded-[4px] bg-accent" />
+              <div className="w-3 h-3 rounded-[3px] bg-accent" />
               <div className="text-accent font-bold text-sm">
                 근감소 수치
               </div>

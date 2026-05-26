@@ -52,7 +52,7 @@ const transformToTrend = (
 // 2. 개별 데이터 셀 컴포넌트
 const DataCell = ({ value, diff, status, unit, up }: { value: string, diff: string, status: string, unit: string, up: boolean }) => {
   const colorClass = 
-    status === 'red' ? ' text-redd' : 
+    status === 'red' ? ' text-redd-600' : 
     status === 'blue' ? ' text-accent' :
     ' text-sub-600 bg-white';
 

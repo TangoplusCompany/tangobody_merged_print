@@ -26,7 +26,7 @@ function MetricList({ title, titleValue, items }: MetricListProps) {
   return (
     <div className="flex flex-col w-full gap-1">
       {/* 상단 메인 타이틀 (빨간색 강조) */}
-      <div className="text-redd text-sm font-bold">
+      <div className="text-redd-600 text-sm font-bold text-start">
         {title}: {titleValue}
       </div>
 
@@ -145,7 +145,7 @@ export default function BodyBenchMark({data}: {data: IBodyBenchmark}) {
           <img 
             src={bodyTypeImg}
             alt='건강지표이미지'
-            className='rounded-2xl w-14 h-14 my-auto border-2 border-sub-200/60'
+            className='rounded-2xl print:rounded-xl bg-sub-100 w-14 h-14 my-auto border-2 border-sub-200/60'
           >
           </img>
           <div className='flex flex-col gap-0.5'>

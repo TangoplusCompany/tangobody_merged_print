@@ -202,7 +202,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
       <div className='flex flex-col gap-1 w-full h-full'>
         <div className='flex justify-between '>
           <div className='flex gap-1 pl-1 pt-1 items-center'>
-            <div className='w-3 h-3 rounded-[4px] bg-accent' />
+            <div className='w-3 h-3 rounded-[3px] bg-accent' />
             <span className='text-accent font-bold text-sm'>근육 분포</span>
           </div>
         </div>
@@ -215,7 +215,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
       <div className='flex flex-col gap-1 w-full h-full'>
         <div className='flex justify-between '>
           <div className='flex gap-1 pl-1 pt-1 items-center'>
-            <div className='w-3 h-3 rounded-[4px] bg-accent' />
+            <div className='w-3 h-3 rounded-[3px] bg-accent' />
             <span className='text-accent font-bold text-sm'>지방 분포</span>
           </div>
         </div>

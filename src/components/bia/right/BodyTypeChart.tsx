@@ -17,7 +17,7 @@ const myDotPosition = {
     <div className="flex flex-col px-2 w-full h-full">
       {/* 1. 타이틀 영역 */}
       <div className="flex gap-2 items-center mb-2 text-accent font-bold">
-        <div className="w-3 h-3 rounded-[4px] bg-accent" />
+        <div className="w-3 h-3 rounded-[3px] bg-accent" />
         <div className="text-accent font-bold text-sm">
           바디 타입 세부 분석
         </div>

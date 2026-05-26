@@ -35,8 +35,8 @@ export default function VerticalStackedBar({
               backgroundColor: segment.color.startsWith('#') ? segment.color : undefined 
             }}
             className={`
-              ${isFirst ? 'rounded-t-sm' : ''} 
-              ${isLast ? 'rounded-b-sm' : ''}
+              ${isFirst ? 'rounded-t-[4px]' : ''} 
+              ${isLast ? 'rounded-b-[4px]' : ''}
               ${!segment.color.startsWith('#') ? segment.color : ''}
             `}
             title={`${segment.label}: ${segment.percentage.toFixed(1)}%`}

@@ -10,16 +10,16 @@ export function RecommendCard ({type, title, description} : {type: string, title
   };
   return (
     <div className="flex w-full gap-2">
-      <div className="w-14 h-14 aspect-square rounded-md bg-sub-100 border items-center flex justify-center border-sub-200">
+      <div className="h-20 w-20 print:w-14 print:h-14 aspect-square rounded-[4px] bg-sub-100 border items-center flex justify-center border-sub-200">
         <img src={iconMap[type] || ic_habit} alt={type} className="w-8 h-8" />
       </div>
       <div className="flex flex-col gap-1 w-full">
         <div className="flex w-full justify-between items-center">
           <span className="text-xs font-bold text-blackk ">{title}</span>
-          <div className="px-1 rounded-sm bg-accent text-[9px] text-white">{type}</div>
+          <div className="px-1 rounded-[4px] bg-accent text-[9px] text-white">{type}</div>
         </div>
 
-        <div className="text-[10px] leading-tight text-sub-600">
+        <div className="text-[10px] text-start leading-tight text-sub-600">
           {description}
         </div>
       </div>
@@ -53,7 +53,7 @@ export default function Recommend({data}: {data: IRecommend}) {
     <div className="flex flex-col gap-2 px-2 w-full h-full">
       {/* 1. 타이틀 영역 (작성하신 부분) */}
       <div className="flex gap-2 items-center text-accent font-bold">
-        <div className="w-3 h-3 rounded-sm bg-accent" />
+        <div className="w-3 h-3 rounded-[3px] bg-accent" />
         <div className="text-accent font-bold text-sm ">
           체중조절/처방
         </div>
