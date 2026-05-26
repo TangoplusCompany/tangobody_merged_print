@@ -24,7 +24,7 @@ export const RomDataGraph = ({
     <div className="flex h-full flex-col rounded-lg border border-sub-100 overflow-hidden bg-white">
       {/* 1. 상단 헤더: shrink-0으로 높이 고정 */}
       <div className="flex justify-between shrink-0 p-0">
-        <span className="text-[10px] font-semibold bg-accent text-white rounded-tl-lg rounded-br-lg px-2">
+        <span className="text-[10px] font-semibold bg-accent text-white rounded-tl-[4px] rounded-br-[4px] px-2">
           {graphType === 0 ? '각도 변화' : '각속도 변화'}
         </span>
 

@@ -6,6 +6,11 @@ export default defineConfig(( ) => {
 
   return {
     plugins: [react()],
+    css: {
+      // 이 부분을 추가하거나 수정해 주세요!
+      transformer: 'postcss', // lightningcss가 설정되어 있다면 제거하거나 포스트시스로 변경
+      minify: 'esbuild',      // 압축 방식을 esbuild로 강제 지정
+    },
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),

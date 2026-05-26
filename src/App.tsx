@@ -34,7 +34,7 @@ function App() {
             {isBia && <BiaApp t_r={trValue} />}
           </div>
         </>
-      ): (<p className='font-bold text-red-500'>데이터가 올바르지 않습니다. 다시 확인해주세요 (it's not trValue)</p>)}
+      ): (<p className='font-bold justify-center text-red-500'>데이터가 올바르지 않습니다. 다시 확인해주세요 (it's not trValue)</p>)}
     </div>
   );
 }
