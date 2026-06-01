@@ -13,7 +13,6 @@ export interface IBasicAppProps {
 export function BasicApp({ t_r }: IBasicAppProps) {
   const { mutate, data, isPending, isError } = usePostBasicData();
   const encryptData = async () => {
-    
     // const cryptoData = {
     //   sn: 2329,
     //   user_uuid: "QAAYA6RDBKSJQRA2",
