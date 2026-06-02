@@ -57,7 +57,7 @@ export function BasicApp({ t_r }: IBasicAppProps) {
       <div className='grid grid-cols-[60%_40%] h-fit bg-sub-100 p-2'>
         <div className='flex flex-col pr-2'>
           <div className='flex'>
-            <span className='text-sub-600 font-bold text-[12px] text-start shrink-0 whitespace-nowrap'>Tango Body Tip 02</span>
+            <span className='text-sub-600 font-bold text-[12px] text-start shrink-0 whitespace-nowrap'>Tango Body Tip 01</span>
             <div className='flex-1 flex items-center mx-2'>
               <div className='bg-sub-300 w-1.5 h-1.5 rounded-full shrink-0' />
               <div className='bg-sub-300 flex-1 h-[2px]' />
