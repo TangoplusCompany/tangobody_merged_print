@@ -36,7 +36,7 @@ export function PartRawDataContainer({data}: {data: IReportDetail}) {
         <div className="grid grid-rows-3 h-full">
           <PartRawData data={"neck"} rawData={data.detail_data} summaryData={data} />
           <PartRawData data={"shoulder"} rawData={data.detail_data} summaryData={data} />
-          <PartRawData data={"neck"} rawData={data.detail_data} summaryData={data} />
+          <PartRawData data={"elbow"} rawData={data.detail_data} summaryData={data} />
         </div>
 
       </div>
