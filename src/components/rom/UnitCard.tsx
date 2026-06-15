@@ -51,8 +51,8 @@ const imgName: Record<titles, string> = {
   '[정면] 어깨 벌림 검사 - 오른쪽': shoulder_front_open_right,
   '[왼측면] 어깨 굽힘 검사': shoulder_side_front_fold_left,
   '[오른측면] 어깨 굽힘 검사': shoulder_side_front_fold_right,
-  '[왼측면] 어깨 폄검사': shoulder_side_front_unfold_left,
-  '[오른측면] 어깨 폄검사': shoulder_side_front_unfold_right,
+  '[왼측면] 어깨 폄 검사': shoulder_side_front_unfold_left,
+  '[오른측면] 어깨 폄 검사': shoulder_side_front_unfold_right,
   '[왼측면] 어깨 가쪽 돌림 검사': shoulder_internal_rotate_left,
   '[오른측면] 어깨 가쪽 돌림 검사': shoulder_internal_rotate_right,
   '[왼측면] 어깨 안쪽 돌림 검사': shoulder_external_rotate_left,
@@ -121,6 +121,8 @@ export default function UnitCard({ data }: { data: IRomDetail }) {
   );
   if (jsonLoading) return <div>로딩중..</div>;
   if (jsonError) return <div>occured Error</div>;
+
+  console.log(imgName[data.title as titles], "")
   return (
     <div className="w-full h-full flex flex-col gap-2 rounded-xl border border-sub-400  p-1">
       {/* 1. 타이틀 영역 */}
