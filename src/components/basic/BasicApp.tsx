@@ -48,7 +48,7 @@ export function BasicApp({ t_r }: IBasicAppProps) {
             
             <div className='flex gap-8'>
               <span>이름: {data.result_summary_data.user_name}</span>
-              <span>성별: {data.result_summary_data.gender === "남자" ? "남성" : "여성"}</span>
+              <span>성별: {data.result_summary_data.gender === "남성" ? "남성" : "여성"}</span>
               <span>현재 검사일: {data.result_summary_data.measure_date?.replace(/-/g, ".").slice(0, 11)} </span>
             </div>
           </div>
