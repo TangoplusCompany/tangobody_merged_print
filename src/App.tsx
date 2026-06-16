@@ -14,8 +14,7 @@ function App() {
   const isBasic = typeValue[0] === '1';
   const isRom   = typeValue[1] === '1';
   const isBia   = typeValue[2] === '1';
-  // 11 len=2
-  // 초당대 ->
+
   return (
     <div className="w-[210mm] mx-auto h-full p-0 m-0">
       {trValue ? (

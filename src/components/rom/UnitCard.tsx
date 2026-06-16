@@ -121,8 +121,6 @@ export default function UnitCard({ data }: { data: IRomDetail }) {
   );
   if (jsonLoading) return <div>로딩중..</div>;
   if (jsonError) return <div>occured Error</div>;
-
-  console.log(imgName[data.title as titles], "")
   return (
     <div className="w-full h-full flex flex-col gap-2 rounded-xl border border-sub-400  p-1">
       {/* 1. 타이틀 영역 */}

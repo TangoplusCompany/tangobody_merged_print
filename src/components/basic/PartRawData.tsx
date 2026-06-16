@@ -41,7 +41,6 @@ export function PartRawData({ data, rawData, summaryData }: PartRawDataProps) {
     2: "bg-redd-600",
   }[currentRiskLevel] ?? "bg-sub-200";
     const riskString = getRiskString(currentRiskLevel);
-  console.log(data, riskKey, currentRiskLevel, currentRangeLevel, riskString)
 
 
 
