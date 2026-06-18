@@ -1,12 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/admin_api/:path*",
-      "destination": "https://gym.tangoplus.co.kr/admin_api/:path*"
+      "source": "/x-7a8f/:path*",
+      "destination": "https://$VITE_PUBLIC_API_URL/:path*"
     },
     {
-      "source": "/proxy-data/:path*",
-      "destination": "https://gym.tangoplus.co.kr/data/Results/:path*"
+      "source": "/zp6-1a/:path*",
+      "destination": "https://$VITE_PUBLIC_FILE_URL/:path*"
     }
   ]
 }

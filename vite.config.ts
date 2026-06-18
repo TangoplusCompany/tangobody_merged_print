@@ -2,14 +2,12 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-export default defineConfig(( ) => {
-
+export default defineConfig(() => {
   return {
     plugins: [react()],
     css: {
-      // 이 부분을 추가하거나 수정해 주세요!
-      transformer: 'postcss', // lightningcss가 설정되어 있다면 제거하거나 포스트시스로 변경
-      minify: 'esbuild',      // 압축 방식을 esbuild로 강제 지정
+      transformer: 'postcss', 
+      minify: 'esbuild',      
     },
     resolve: {
       alias: {
@@ -18,15 +16,20 @@ export default defineConfig(( ) => {
     },
     server: {
       proxy: {
-        '/proxy-data': {
+        // 💡 1. /admin_api ➡️ 관리자 API 위장 경로 (/x-7a8f)로 변경
+        '/x-7a8f': {
           target: 'https://gym.tangoplus.co.kr', 
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/proxy-data/, '/data/Results'),
+          // 로컬 브라우저가 보낸 /x-7a8f를 진짜 서버 경로인 /admin_api로 가공합니다.
+          rewrite: (path) => path.replace(/^\/x-7a8f/, '/admin_api'),
           secure: false,
         },
-        '/admin_api': {
+        // 💡 2. /proxy-data ➡️ 파일 서버 위장 경로 (/zp6-1a)로 변경
+        '/zp6-1a': {
           target: 'https://gym.tangoplus.co.kr', 
           changeOrigin: true,
+          // 로컬 브라우저가 보낸 /zp6-1a를 진짜 서버 경로인 /data/Results로 가공합니다.
+          rewrite: (path) => path.replace(/^\/zp6-1a/, '/data/Results'),
           secure: false,
         },
       },
