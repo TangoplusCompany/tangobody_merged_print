@@ -5,7 +5,8 @@ export async function removeBlackBackground(originalUrl: string): Promise<string
     // 💡 기존 도메인 주소를 vite.config.ts에 잡혀있는 프록시 경로(/proxy-data)로 변경합니다.
     // 그 앞 도메인+경로 부분을 "/proxy-data"로 쏙 바꿔줍니다.
     const proxiedUrl = originalUrl.replace(
-      `${import.meta.env.VITE_PUBLIC_FILE_URL}`, "/zp6-1a"
+      "https://gym.tangoplus.co.kr/data/Results", 
+      "/zp6-1a"
     );
 
     img.crossOrigin = "anonymous"; // CORS 차단 방지를 위해 설정
@@ -72,7 +73,7 @@ export async function preprocessTrajectoryImage(originalUrl: string): Promise<st
     const img = new Image();
 
     const proxiedUrl = originalUrl.replace(
-      `${import.meta.env.VITE_PUBLIC_FILE_URL}`, 
+      "https://gym.tangoplus.co.kr/data/Results", 
       "/zp6-1a"
     );
 
