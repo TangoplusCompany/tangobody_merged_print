@@ -72,7 +72,7 @@ export async function preprocessTrajectoryImage(originalUrl: string): Promise<st
     const img = new Image();
 
     const proxiedUrl = originalUrl.replace(
-      "https://gym.tangoplus.co.kr/data/Results", 
+      `${import.meta.env.VITE_PUBLIC_FILE_URL}`, 
       "/zp6-1a"
     );
 
