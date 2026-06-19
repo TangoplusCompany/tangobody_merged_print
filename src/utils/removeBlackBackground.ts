@@ -73,7 +73,7 @@ export async function preprocessTrajectoryImage(originalUrl: string): Promise<st
 
     const proxiedUrl = originalUrl.replace(
       "https://gym.tangoplus.co.kr/data/Results", 
-      "/proxy-data"
+      "/zp6-1a"
     );
 
     img.crossOrigin = "anonymous";
