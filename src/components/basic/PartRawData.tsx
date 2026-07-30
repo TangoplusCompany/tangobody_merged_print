@@ -52,7 +52,7 @@ export function PartRawData({ data, rawData, summaryData }: PartRawDataProps) {
     knee: "무릎",
     ankle: "발목"
   };
-
+  // TODO q
   const detailTitleMap: Record<string, string> = {
     turtle_neck: "거북목",
     scoliosis: "경추 측만",
@@ -94,9 +94,9 @@ export function PartRawData({ data, rawData, summaryData }: PartRawDataProps) {
       <div className="grid grid-rows-3 h-full">
         {detailKeys.map((rawKey) => {
           const detailTitle = detailTitleMap[rawKey] || rawKey;
-          const unitData = targetSection[rawKey as keyof typeof targetSection] as IBasicCardUnit;
-          const riskLevel = unitData.risk_level;
-          const rangeLevel = unitData.range_level;
+          const unitData = targetSection[rawKey as keyof typeof targetSection] as IBasicCardUnit | undefined;
+          const riskLevel = unitData?.risk_level ?? 0;
+          const rangeLevel = unitData?.range_level ?? 0;
           const styleClass = getRiskBgColor(riskLevel);
           const arrowClass = getArrowColor(riskLevel);
           return (
