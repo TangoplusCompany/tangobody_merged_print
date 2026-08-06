@@ -6,11 +6,11 @@ import { PartRawDataContainer } from './PartRawDataContainer';
 import { Graph } from './Graph';
 
 
-export interface IBasicAppProps {
+export interface IAppProps {
   t_r: string;
 }
 
-export function BasicApp({ t_r }: IBasicAppProps) {
+export function BasicApp({ t_r }: IAppProps) {
   const { mutate, data, isPending, isError } = usePostBasicData();
   const encryptData = async () => {
   };
@@ -23,7 +23,7 @@ export function BasicApp({ t_r }: IBasicAppProps) {
   if (isPending) return <div className="flex h-screen items-center justify-center">로딩 중...</div>;
   if (!t_r || isError || (data === undefined)) {
     return (
-      <div className="flex flex-col h-screen items-center justify-center gap-4">
+      <div className="print:hidden flex flex-col h-screen items-center justify-center gap-4">
         <div className="text-xl font-bold text-red-500">올바르지 않은 데이터입니다.</div>
       </div>
     );

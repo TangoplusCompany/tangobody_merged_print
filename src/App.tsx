@@ -2,6 +2,8 @@ import './App.css'
 import { BasicApp } from './components/basic/BasicApp';
 import { RomApp } from './components/rom/RomApp';
 import { BiaApp } from './components/bia/BiaApp';
+import { MoireApp } from './components/moire/MoireApp';
+import { GaitApp } from './components/gait/GaitApp';
 
 function App() {
   const handlePrint = () => {
@@ -14,7 +16,8 @@ function App() {
   const isBasic = typeValue[0] === '1';
   const isRom   = typeValue[1] === '1';
   const isBia   = typeValue[2] === '1';
-
+  const isGait   = typeValue[3] === '1';
+  const isMoire   = typeValue[4] === '1';
   return (
     <div className="w-[210mm] mx-auto h-full p-0 m-0">
       {trValue ? (
@@ -31,6 +34,8 @@ function App() {
             {isBasic && <BasicApp t_r={trValue} />}
             {isRom && <RomApp t_r={trValue} />}
             {isBia && <BiaApp t_r={trValue} />}
+            {isGait && <GaitApp t_r={trValue} />}
+            {isMoire && <MoireApp t_r={trValue} />}
           </div>
         </>
       ): (<p className='font-bold justify-center text-red-500'>데이터가 올바르지 않습니다. 다시 확인해주세요 (it's not trValue)</p>)}

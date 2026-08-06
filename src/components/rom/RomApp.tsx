@@ -25,7 +25,7 @@ export function RomApp({ t_r }: IRomAppProps) {
   if (isPending) return <div className="flex h-screen items-center justify-center">로딩 중...</div>;
   if (!t_r || isError || (pairedData && pairedData.length === 0)) {
     return (
-      <div className="flex flex-col h-screen items-center justify-center gap-4">
+      <div className="print:hidden flex flex-col h-screen items-center justify-center gap-4">
         <div className="text-xl font-bold text-red-500">올바르지 않은 데이터입니다.</div>
       </div>
     );
