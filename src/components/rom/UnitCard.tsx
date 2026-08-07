@@ -88,7 +88,7 @@ const getLevelValue = (value: number, data: IRomDetail) => {
   if (value >= data.normal_normal) {
     return 'text-accent '; // level 3
   } else if (value >= data.normal_warning) {
-    return 'text-greenn'; // level 2
+    return 'text-greenn-600'; // level 2
   } else if (value >= data.normal_bad) {
     return 'text-orangee-600 '; // level 1
   } else {
@@ -99,7 +99,7 @@ const getBgLevelValue = (value: number, data: IRomDetail) => {
   if (value >= data.normal_normal) {
     return 'bg-accent '; // level 3
   } else if (value >= data.normal_warning) {
-    return 'bg-greenn '; // level 2
+    return 'bg-greenn-600 '; // level 2
   } else if (value >= data.normal_bad) {
     return 'bg-orangee-600 '; // level 1
   } else {
@@ -112,7 +112,7 @@ export default function UnitCard({ data }: { data: IRomDetail }) {
   const stateBarColor = {
     0: "bg-redd-600/75 w-[23.9%]",
     1: "bg-orangee-600/75 w-[48.9%]",
-    2: "bg-greenn/75 w-[73.9%]",
+    2: "bg-greenn-600/75 w-[73.9%]",
     3: "bg-accent/75 w-[98.9%]"
   } [data.score];
   

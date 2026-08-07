@@ -25,7 +25,10 @@ export default {
           500: '#FFA546',
           800: '#CC7B1C'
         },
-        'greenn': '#00E006',
+        'greenn':  {
+          500: '#49D68F',
+          600: '#00E006',
+        },
         'sub': {
           800: '#454545',
           600: '#7E7E7E',
@@ -35,6 +38,7 @@ export default {
           150: '#EDEDED',
           100: '#F8F8F8',
         },
+
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

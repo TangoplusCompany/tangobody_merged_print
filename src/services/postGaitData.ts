@@ -1,8 +1,8 @@
 import axios from "axios";
-import type { IBiaData } from "../types/bia";
+import type { IGaitDetail } from "../types/gait";
 
 
-export const postGaitData = async (encryptedData: string): Promise<IBiaData> => {
+export const postGaitData = async (encryptedData: string): Promise<IGaitDetail> => {
   const { data } = await axios.post(`/x-7a8f/gait-report`, { 
     t_r: encryptedData 
   });
