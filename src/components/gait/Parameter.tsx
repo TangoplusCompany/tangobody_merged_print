@@ -69,13 +69,13 @@ function GaitItem({ item }: { item: ParameterItem }) {
 
   return (
     /* 💡 1. h-full 과 justify-center 를 추가하여 높이 안에서 중앙 정렬 기반 마련 */
-    <div className="flex flex-col justify-center w-full h-full bg-sub-100 rounded-[6px] px-2 py-1 mb-2">
+    <div className="flex flex-col justify-center w-full h-full bg-sub-100 rounded-[6px] px-2 py-2 print:py-1 mb-4 print:mb-2">
       {/* 헤더 */}
       <div className="flex justify-between items-center">
-        <span className="text-xs font-semibold text-sub-800">{item.title}</span>
+        <span className="text-sm print:text-xs font-semibold text-sub-800">{item.title}</span>
         
-        <div className="flex gap-1 items-center">
-          <span className="text-xs print:text-[10px] text-sub-800 font-semibold">{item.value}{item.unit}</span>
+        <div className="flex gap-1 items-center mb-2 print:mb-0">
+          <span className="text-sm print:text-xs text-sub-800 font-semibold">{item.value}{item.unit}</span>
           <span className={`px-1.5 py-1 rounded-full text-xs text-white text-center whitespace-normal break-keep ${riskInfo.badgeCss}`}>
             {riskInfo.label}
           </span>
@@ -86,7 +86,7 @@ function GaitItem({ item }: { item: ParameterItem }) {
           💡 2. my-auto를 통해 L/R 박스가 없을 때는 자동으로 세로 중앙에 위치하도록 설정 
           💡 3. 하단 수치 라벨 공간 확보를 위해 pb-5 pt-2 지정
       */}
-      <div className="relative w-full py-1 mb-3">
+      <div className="relative w-full py-1 print:py-0.5 mb-4 print:mb-3">
         <div className="relative w-full h-3 rounded-full overflow-hidden flex">
           {/* 1구간 (< t0): 위험 영역 */}
           <div className={`w-[33.3%] transition-colors ${isLowActive ? "bg-sub-800" : "bg-sub-800/50"}`} />
@@ -98,7 +98,7 @@ function GaitItem({ item }: { item: ParameterItem }) {
 
         {/* 발자국 인디케이터 */}
         <div
-          className="absolute top-[0.5px] -translate-x-1/2 bg-white shadow-md border border-sub-200 rounded-full w-5 h-5 flex items-center justify-center z-10"
+          className="absolute top-[0px] print:-top-[4px] -translate-x-1/2 bg-white shadow-md border border-sub-200 rounded-full w-5 h-5 print:w-6 print:h-6 flex items-center justify-center z-10"
           style={{ left: `${position}%` }}
         >
           <svg width="5" height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">

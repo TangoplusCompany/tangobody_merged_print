@@ -175,7 +175,7 @@ function  TiltItem ({title, value}: {title: string, value: number}) {
   return (
     <div className="flex flex-col item-center py-2">
       <div className="flex w-full justify-between">
-        <span className="text-sub-800 text-xs text-start font-semibold">{title}</span>
+        <span className="text-sub-800 text-sm print:text-xs text-start font-semibold">{title}</span>
         <span className="text-sub-800 text-xs font-semibold ">{value}</span>
       </div>
       

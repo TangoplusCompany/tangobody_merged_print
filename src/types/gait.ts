@@ -1,3 +1,15 @@
+export interface IGaitResponse {
+  gait_result: IGaitResult
+}
+
+export interface IGaitResult {
+  gait_measure_info: IGaitInfo
+  user_info: IUserInfo
+}
+export interface IUserInfo {
+  user_name : string;
+  gender: string;
+}
 export interface IGaitMeta {
   sn : number;
   local_sn: number;
@@ -7,9 +19,10 @@ export interface IGaitMeta {
   user_uuid	 : string;
   user_sn: number;
   user_name : string;
+  gender: string;
   measure_date : string;
 }
-export interface IGaitDetail extends IGaitMeta {
+export interface IGaitInfo extends IGaitMeta {
   file_server_video_name : string;
   file_server_gait_frame_name : string;
   totalSequenceCount	: number;
@@ -100,93 +113,3 @@ export interface IGaitDetail extends IGaitMeta {
   resultStepLenthDescirption	: string;
   ersultStrideLengthDescription: string;
 }
-
-export interface IGaitSeqDetail extends IGaitMeta {
-  file_name_kinematics_frame: string;
-  file_server_kinematics_frame: string;
-  sequenceIndex: string;
-  direction: string;
-  globalStartFrameIndex: string;
-  globalEndFrameIndex: string;
-  validStepCount: string;
-  validStrideCount: string;
-  sequenceTime: string;
-  gaitSpeed: string;
-  cadence: string;
-  doubleSupportTime: string;
-  leftSingleSupportTime: string;
-  rightSingleSupportTime: string;
-  avgLeftStanceTime: string;
-  avgLeftSwingTime: string;
-  avgRightStanceTime: string;
-  avgRightSwingTime: string;
-  doubleSupportRatio: string;
-  leftSingleSupportRatio: string;
-  rightSingleSupportRatio: string;
-  leftStanceRatio: string;
-  leftSwingRatio: string;
-  rightStanceRatio: string;
-  rightSwingRatio: string;
-  maxShoulderTilt: string;
-  maxTrunkFlexion: string;
-  maxTrunkSway: string;
-  maxPelvisDrop: string;
-  armSwingAsymmetry: string;
-  leftArmSwingRange: string;
-  rightArmSwingRange: string;
-}
-
-export interface IGaitStep extends IGaitMeta {
-  sequenceIndex: string;
-  direction: string;
-  stepIndex: string;
-  startFrameIndex: number;
-  endFrameIndex: number;
-  foot: "Left" | "Right";
-  startTiem: number;
-  endTime: number;
-  stepLength: number;
-  stepWidth : number;
-  stepTime: number;
-  stepSpeed: number;
-  isValid: 0 | 1;
-  accuracyScore: number;
-}
-export interface IGaitStride extends IGaitMeta {
-  sequenceIndex: string;
-  direction: string;
-  strideIndex: string;
-  startFrameIndex: number;
-  endFrameIndex: number;
-  foot: "Left" | "Right";
-  startTime: number;
-  endTime: number;
-  strideLength: number;
-  strideTime: number;
-  stanceRatio: number;
-  swingRatio: number;
-  stanceTime: number;
-  swingTime: number;
-  maxToeClearance: number;
-  strideSpeed: number;
-  isValid: 0 | 1;
-  accuracyScore: number;
-}
-
-
-export interface IGaitSeqFrameData {
-  sequenceIndex: number;
-  frameIndex: number;
-  timestamp: number;
-  headLateralTilt: number;
-  headForwardTilt: number;
-  trunkSway: number;
-  trunkFlexion: number;
-  shoulderTilt: number;
-  leftArmAngle: number;
-  rightArmAngle: number;
-  pelvicDrop: number;
-  leftKneeAngle: number;
-  rightKneeAngle: number;
-}
-

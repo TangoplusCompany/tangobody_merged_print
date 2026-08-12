@@ -2,11 +2,11 @@ import type { GaitContainerProps } from "./GaitApp";
 
 export interface GaitInfoCardProps {
   type: string//"Pattern" | "Balance" | "Efficiency"
-  title: string;
-  description ?: string;
+  title?: string;
+  description : string;
   grade: number;
 }
-export function GaitInfoHorizonCard({ type, title,  grade } : GaitInfoCardProps) {
+export function GaitInfoHorizonCard({ type, description,  grade } : GaitInfoCardProps) {
   const bgColor = {
     0 : " bg-sub-600",
     1 : "bg-orangee-600",
@@ -29,12 +29,12 @@ export function GaitInfoHorizonCard({ type, title,  grade } : GaitInfoCardProps)
   }[grade];
 
   return (
-    <div className={`flex flex-col px-2 py-1 rounded-[4px]  border border-sub-200`}>
-      <div className="flex justify-between w-full">
-        <div className={`text-xs print:text-[10px] text-sub-400`}>{typeTitle}</div>
-        <div className={`text-xs ${bgColor} text-white px-1.5 py-0.5 rounded-full`}>{riskTitle}</div>
+    <div className={`flex flex-col px-2 py-2 print:py-1 rounded-[4px]  border border-sub-200`}>
+      <div className="flex justify-between w-full py-2 print:py-0">
+        <div className={`text-sm print:text-[10px] text-sub-400`}>{typeTitle}</div>
+        <div className={`text-sm print:text-xs ${bgColor} text-white px-1.5 print:py-0.5 rounded-full`}>{riskTitle}</div>
       </div>
-      <div className={`text-start text-sm ${textColor}`}>{title}</div>
+      <div className={`text-start text-sm ${textColor}`}>{description}</div>
     </div>
   )
 }
@@ -56,16 +56,16 @@ export function GaitInfoVertiCard({ type, description, grade } : GaitInfoCardPro
   const gradeTitle = {
     0 : "정상",
     1 : "주의",
-    2: "위험",
+    2 : "위험",
   } [grade];
 
   return (
-    <div className={`flex flex-col gap-2 px-2 py-1 `}>
+    <div className={`flex flex-col gap-2 px-2 py-2 print:py-1 `}>
       <div className="flex w-full justify-between items-center">
         <div className={`text-xs print:text-[10px] text-sub-400 font-semibold`}>{typeTitle}</div>
-        <div className={`text-xs ${textBg} text-white px-1.5 py-0.5 rounded-full`}>{gradeTitle}</div>
+        <div className={`text-sm print:text-xs ${textBg} text-white px-1.5 py-0.5 rounded-full`}>{gradeTitle}</div>
       </div>
-      <div className={`text-start text-xs text-sub-700`}>{description}</div>
+      <div className={`text-start text-sm print:text-xs text-sub-800`}>{description}</div>
     </div>
   )
 }
@@ -131,8 +131,8 @@ export default function GaitInfo({data}: GaitContainerProps) {
       </div>
       
       <div>
-        <div className="grid grid-cols-[15%_85%] items-center gap-2 bg-sub-100 rounded-[4px] my-1 px-2">
-          <div className="text-xs text-sub-800 text-center">
+        <div className="grid grid-cols-[15%_85%] items-center gap-2 bg-sub-100 rounded-[4px] py-2 print:py-0 my-2 print:my-1 px-2">
+          <div className="text-sm print:text-xs text-sub-800 text-center">
             종합 판정
           </div>
           <div className="text-start font-semibold text-sub-800 text-sm py-1">{data.resultGaitTypeTitle}</div>
@@ -141,7 +141,7 @@ export default function GaitInfo({data}: GaitContainerProps) {
 
         <div className="grid grid-cols-3 gap-1 mb-2">
           {infoHorizonCards.map((card, id) => (
-            <GaitInfoHorizonCard key={id} type={card.type} title={card.title} grade={card.grade} />
+            <GaitInfoHorizonCard key={id} type={card.type} description={card.description} grade={card.grade} />
           ))}
         </div>
 
