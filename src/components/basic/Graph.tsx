@@ -120,7 +120,7 @@ export function Graph({ data }: { data: IReportDetail }) {
           <img 
             src={currentImg} 
             alt={bodyBalance} 
-            className="w-40 h-40 print:w-28 print:h-28 bg-sub-200 rounded-[8px]"
+            className="w-28 h-28 print:w-20 print:h-20 bg-sub-200 rounded-[8px]"
           />
           <div className="flex items-center  text-sub-800 text-base print:text-xs pr-1 text-start leading-tight">
             QR코드를 스캔 해보세요.<br/>지난 검사 기록들을 확인하고 비교해볼 수 있습니다.
