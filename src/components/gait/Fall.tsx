@@ -104,7 +104,7 @@ export function FallItem({ item }: { item: FallItemData }) {
       <div className="flex justify-between items-center">
         <span className="text-xs font-semibold text-sub-800">{item.title}</span>
         <div className="flex items-center gap-1.5">
-          <span className="text-xs print:text-[10px] font-semibold text-sub-800">{item.value} {item.unit}</span>
+          <span className="text-xs print:text-[10px] font-semibold text-sub-800">{item.value.toFixed(1)} {item.unit}</span>
           <span className={`px-1.5 py-0.5 rounded-full text-xs text-white text-center whitespace-normal break-keep ${riskInfo.badgeCss}`}>
             {riskInfo.label}
           </span>
@@ -176,7 +176,7 @@ function  TiltItem ({title, value}: {title: string, value: number}) {
     <div className="flex flex-col item-center py-2">
       <div className="flex w-full justify-between">
         <span className="text-sub-800 text-sm print:text-xs text-start font-semibold">{title}</span>
-        <span className="text-sub-800 text-xs font-semibold ">{value}</span>
+        <span className="text-sub-800 text-xs font-semibold ">{value.toFixed(1)}</span>
       </div>
       
       <div className="flex h-full items-center">
@@ -274,9 +274,9 @@ export default function GaitFall({ data }: GaitContainerProps) {
               <span className="text-xs font-semibold text-sub-800">무릎 최대 굽힘</span>
               <div className="flex items-center gap-1.5">
                 <div className="text-xs flex gap-2 font-semibold">
-                  <span className=" text-sub-800">L {data.avgMaxLeftKneeFlexion}º</span>
+                  <span className=" text-sub-800">L {data.avgMaxLeftKneeFlexion.toFixed(1)}º</span>
                   <span className=" text-sub-800"> | </span>
-                  <span className=" text-sub-800">R {data.avgMaxRightKneeFlexion}º</span>
+                  <span className=" text-sub-800">R {data.avgMaxRightKneeFlexion.toFixed(1)}º</span>
                 </div>
                 <span className={`px-1.5 py-1 rounded-full text-xs text-white text-center whitespace-normal break-keep ${riskInfo.badgeCss}`}>
                   {riskInfo.label}

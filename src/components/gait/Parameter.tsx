@@ -75,7 +75,7 @@ function GaitItem({ item }: { item: ParameterItem }) {
         <span className="text-sm print:text-xs font-semibold text-sub-800">{item.title}</span>
         
         <div className="flex gap-1 items-center mb-2 print:mb-0">
-          <span className="text-sm print:text-xs text-sub-800 font-semibold">{item.value}{item.unit}</span>
+          <span className="text-sm print:text-xs text-sub-800 font-semibold">{item.value.toFixed(1)}{item.unit}</span>
           <span className={`px-1.5 py-1 rounded-full text-xs text-white text-center whitespace-normal break-keep ${riskInfo.badgeCss}`}>
             {riskInfo.label}
           </span>
@@ -127,14 +127,14 @@ function GaitItem({ item }: { item: ParameterItem }) {
 export default function GaitParameter({ data }: GaitContainerProps) {
   const gaitItems: ParameterItem[] = [
     {
-      title: "보행속도(Gait Speed)",
+      title: "보행 속도(Gait Speed)",
       risk: Number(data?.resultSpeedRisk ?? 0),
       value: data?.avgOverallStepSpeed ?? 1.1,
       threshold0: 0.8,
       threshold1: 1.3,
       unit: "m/s",
-      leftValue: `${data?.avgLeftStepSpeed ?? 1.5} m/s`,
-      rightValue: `${data?.avgRightStepSpeed ?? 1.2} m/s`,
+      leftValue: `${data?.avgLeftStepSpeed.toFixed(1) ?? 1.5} m/s`,
+      rightValue: `${data?.avgRightStepSpeed.toFixed(1) ?? 1.2} m/s`,
     },
     {
       title: "평균 보폭(Step Length)",
@@ -143,8 +143,8 @@ export default function GaitParameter({ data }: GaitContainerProps) {
       threshold0: 0.5,
       threshold1: 0.75,
       unit: "m",
-      leftValue: `${data?.avgLeftStepLength ?? 0.65} %`,
-      rightValue: `${data?.avgRightStepLength ?? 0.65} %`,
+      leftValue: `${data?.avgLeftStepLength.toFixed(1) ?? 0.65} %`,
+      rightValue: `${data?.avgRightStepLength.toFixed(1) ?? 0.65} %`,
     },
     {
       title: "평균 활보장(Stride Length)",
@@ -153,8 +153,8 @@ export default function GaitParameter({ data }: GaitContainerProps) {
       threshold0: 1.0,
       threshold1: 1.5,
       unit: "m",
-      leftValue: `${data?.avgLeftStepLength ?? 0.7} m`,
-      rightValue: `${data?.avgRightStepLength ?? 0.5} m`,
+      leftValue: `${data?.avgLeftStepLength.toFixed(1) ?? 0.7} m`,
+      rightValue: `${data?.avgRightStepLength.toFixed(1) ?? 0.5} m`,
     },
     {
       title: "케이던스(Cadence)",
