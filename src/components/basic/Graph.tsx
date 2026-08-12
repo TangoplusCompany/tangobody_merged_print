@@ -1,7 +1,7 @@
 
 import type { IBasicCards, IBasicHistoryUnit, IReportDetail } from "../../types/basic";
 import { getRangeCircle } from "../../utils/getRiskString";
-import img_unknown from "../../assets/img_unknown.png"
+import qr_my_tangobody from "../../assets/qr_my_tangobody.png"
 
 export function Graph({ data }: { data: IReportDetail }) {
   function getBgColor(riskLevel: number): string {
@@ -31,7 +31,7 @@ export function Graph({ data }: { data: IReportDetail }) {
   const gridSlots = Array.from({ length: 10 });
 
   const bodyBalance = 'UNKNOWN'
-  const currentImg =  img_unknown;
+  const currentImg =  qr_my_tangobody;
   return (
     <div className="grid grid-cols-[2.5fr_1.5fr] rounded-xl border border-sub-200 overflow-hidden bg-white text-[13px] text-sub-800 mt-2">
       {/* 왼쪽 측정 이력 */}
@@ -114,18 +114,16 @@ export function Graph({ data }: { data: IReportDetail }) {
       {/*  체형 유형 분석 */}
       <div className="flex flex-col w-full h-full">
         <div className="h-10 print:h-8 font-bold flex items-center bg-sub-200 justify-center text-sub-800 text-[12px] print:text-[10px] border-r border-sub-200">
-          체형 유형 분석
+          더 많은 결과 확인하기
         </div>
-        <div className="grid grid-cols-[1fr_2fr] h-full w-full">
-          <div className="flex items-center w-full h-full justify-center">
-            <img 
-              src={currentImg} 
-              alt={bodyBalance} 
-              className="w-24 h-24 print:w-20 print:h-20 bg-sub-200 rounded-[8px]"
-            />
-          </div>
-          <div className="flex items-center text-center text-sub-600 text-[10px] pr-1 text-start leading-tight">
-            * 측정 기록이 부족합니다<br/>유형에 대한 결과는 최소 5회 이상이 필요합니다. 꾸준히 내 건강을 관리하여 나의 체형 유형을 파악해보세요
+        <div className="flex gap-1 h-full w-full items-center px-2">
+          <img 
+            src={currentImg} 
+            alt={bodyBalance} 
+            className="w-40 h-40 print:w-28 print:h-28 bg-sub-200 rounded-[8px]"
+          />
+          <div className="flex items-center  text-sub-800 text-base print:text-xs pr-1 text-start leading-tight">
+            QR코드를 스캔 해보세요.<br/>지난 검사 기록들을 확인하고 비교해볼 수 있습니다.
           </div>
         </div>
       </div>
