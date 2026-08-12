@@ -117,11 +117,14 @@ export function Graph({ data }: { data: IReportDetail }) {
           더 많은 결과 확인하기
         </div>
         <div className="flex gap-1 h-full w-full items-center px-2">
-          <img 
-            src={currentImg} 
-            alt={bodyBalance} 
-            className="w-28 h-28 print:w-20 print:h-20 bg-sub-200 rounded-[8px]"
-          />
+          <div className="flex flex-col gap-0.5 items-center">
+            <img 
+              src={currentImg} 
+              alt={bodyBalance} 
+              className="w-28 h-28 print:w-20 print:h-20 bg-sub-200 rounded-[8px]"
+            />
+            <span className="text-[10px] text-semibold text-sub-400">https://my.tangobody.co.kr</span>
+          </div>
           <div className="flex items-center  text-sub-800 text-base print:text-xs pr-1 text-start leading-tight">
             QR코드를 스캔 해보세요.<br/>지난 검사 기록들을 확인하고 비교해볼 수 있습니다.
           </div>
