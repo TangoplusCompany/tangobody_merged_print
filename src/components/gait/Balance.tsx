@@ -3,6 +3,7 @@ import type { GaitContainerProps } from "./GaitApp";
 import GaitGaugeChart from "./GuageChart";
 
 export default function GaitBalance({data}: GaitContainerProps) {
+  
   return (
     <div className="flex flex-col h-fit border border-sub-200 rounded-[6px] p-2 gap-2">
 
@@ -25,20 +26,20 @@ export default function GaitBalance({data}: GaitContainerProps) {
             <GaitGaugeChart
               left={{
                 label: "왼발",
-                percent: 40,
-                time: "4.2초",
+                percent: data.avgLeftSingleSupportRatio,
+                time: `${data.avgDoubleSupportTime.toFixed(1)}초`,
                 color: { id: "leftGrad", start: "#5B93FF00", end: "#5B93FF" },
               }}
               both={{
                 label: "양발 지지",
-                percent: 10,
-                time: "1.05초",
+                percent: data.avgDoubleSupportRatio,
+                time: `${data.avgLeftSingleSupportTime.toFixed(1)}초`,
                 color: { id: "bothGrad", start: "#7E7E7E00", end: "#7E7E7E" },
               }}
               right={{
                 label: "오른발 지지",
-                percent: 50,
-                time: "5.25초",
+                percent: data.avgRightSingleSupportRatio,
+                time: `${data.avgRightSingleSupportTime.toFixed(1)}초`,
                 color: { id: "rightGrad", start: "#49D68F00", end: "#49D68F" },
               }}
             />
@@ -103,10 +104,10 @@ export default function GaitBalance({data}: GaitContainerProps) {
                     className="h-full bg-gradient-to-r from-greenn-500/90 to-greenn-500/30 rounded-[6px] flex items-center justify-between px-1 text-white font-bold shrink-0"
                     style={{ width: `${data.avgLeftStanceRatio}%` }}
                   >
-                    <span className="bg-sub-100/20 text-white mx-auto px-1.5 rounded-full text-[10px]">{data.avgLeftStanceRatio.toFixed(1)}%</span>
+                    <span className="bg-sub-100/20 text-white mx-auto px-1.5 rounded-full text-[10px]">{data.avgRightStanceRatio.toFixed(1)}%</span>
                   </div>
                   <div className="flex-1 flex items-center justify-between px-4 text-sub-700 font-bold">
-                    <span className="bg-sub-100/20 px-1.5 py-1 rounded-full text-[10px]">{data.avgLeftSwingRatio.toFixed(1)}%</span>
+                    <span className="bg-sub-100/20 px-1.5 py-1 rounded-full text-[10px]">{data.avgRightSwingRatio.toFixed(1)}%</span>
                   </div>
                 </div>
               </div>
@@ -127,10 +128,10 @@ export default function GaitBalance({data}: GaitContainerProps) {
                     className="h-full bg-gradient-to-r from-sub-800/90 to-sub-800/30 rounded-[6px] flex items-center justify-between px-1 text-white font-bold shrink-0"
                     style={{ width: `${data.avgLeftStanceRatio}%` }}
                   >
-                    <span className="bg-sub-100/20 text-white mx-auto px-1.5 rounded-full text-[10px]">{data.avgLeftStanceRatio.toFixed(1)}%</span>
+                    <span className="bg-sub-100/20 text-white mx-auto px-1.5 rounded-full text-[10px]">{data.avgStancePhaseRatio.toFixed(1)}%</span>
                   </div>
                   <div className="flex-1 flex items-center justify-between px-4 text-sub-700 font-bold">
-                    <span className="bg-sub-100/20 px-1.5 py-1 rounded-full text-[10px]">{data.avgLeftSwingRatio.toFixed(1)}%</span>
+                    <span className="bg-sub-100/20 px-1.5 py-1 rounded-full text-[10px]">{data.avgSwingPhaseRatio.toFixed(1)}%</span>
                   </div>
                 </div>
               </div>
