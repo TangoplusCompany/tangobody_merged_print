@@ -54,7 +54,7 @@ export function GaitApp({ t_r }: IAppProps) { //
           </div>
         )}
       </div>
-      <div className="flex flex-col mt-2 gap-2">
+      <div className="flex flex-col mt-2 gap-2 print:gap-1">
         <div className="flex flex-col ">
           <GaitInfo  data={result.gait_measure_info} />
         </div>

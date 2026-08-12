@@ -174,7 +174,6 @@ export default function GaitParameter({ data }: GaitContainerProps) {
           03 보행 분석 파라미터
         </div>
       </div>
-      <span className="text-start text-[9px] text-sub-300">① 상단:  전체 범위 내 현재 위치 ② 하단: 좌 우 측정값 및 차이 </span>
       <div className="grid grid-rows-4 gap-1 h-full">
         {gaitItems.map((item, index) => (
           <GaitItem key={index} item={item} />
