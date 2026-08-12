@@ -102,7 +102,7 @@ export default function GaitBalance({data}: GaitContainerProps) {
                 <div className="flex w-full rounded-[6px] overflow-hidden bg-sub-100 border border-sub-200 items-center justify-between">
                   <div 
                     className="h-full bg-gradient-to-r from-greenn-500/90 to-greenn-500/30 rounded-[6px] flex items-center justify-between px-1 text-white font-bold shrink-0"
-                    style={{ width: `${data.avgLeftStanceRatio}%` }}
+                    style={{ width: `${data.avgRightStanceRatio}%` }}
                   >
                     <span className="bg-sub-100/20 text-white mx-auto px-1.5 rounded-full text-[10px]">{data.avgRightStanceRatio.toFixed(1)}%</span>
                   </div>
@@ -126,7 +126,7 @@ export default function GaitBalance({data}: GaitContainerProps) {
                 <div className="flex w-full rounded-[6px] overflow-hidden bg-sub-100 border border-sub-200 items-center justify-between">
                   <div 
                     className="h-full bg-gradient-to-r from-sub-800/90 to-sub-800/30 rounded-[6px] flex items-center justify-between px-1 text-white font-bold shrink-0"
-                    style={{ width: `${data.avgLeftStanceRatio}%` }}
+                    style={{ width: `${data.avgStancePhaseRatio}%` }}
                   >
                     <span className="bg-sub-100/20 text-white mx-auto px-1.5 rounded-full text-[10px]">{data.avgStancePhaseRatio.toFixed(1)}%</span>
                   </div>
