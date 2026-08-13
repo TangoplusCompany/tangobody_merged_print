@@ -96,38 +96,28 @@ export async function preprocessTrajectoryImage(originalUrl: string): Promise<st
         const b = data[i + 2];
         const a = data[i + 3];
 
-        // 1. 검은 배경 제거 (부드러운 페더링 적용)
-        const distToBlack = Math.sqrt(r * r + g * g + b * b);
-        const HARD = 50;
-        const SOFT = 200;
+        if (a === 0) continue;
 
-        let alpha = a;
-        if (distToBlack <= HARD) {
+        const maxVal = Math.max(r, g, b);
+        const minVal = Math.min(r, g, b);
+        const colorDiff = maxVal - minVal;
+
+        // 1. 무채색(검은 배경, 회색 십자선) 및 너무 어두운 픽셀 제거
+        if (colorDiff < 15 || maxVal < 30) {
           data[i + 3] = 0;
           continue;
-        } else if (distToBlack < SOFT) {
-          alpha = a * ((distToBlack - HARD) / (SOFT - HARD));
         }
 
-        const L = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        const BG = 35;
-        const EDGE = 60;
+        // 2. 궤적 선 픽셀: 불투명화 및 색상 치환
+        data[i + 3] = 255;
 
-        if (L <= BG) {
-          data[i + 3] = 0;
-          continue;
-        } else if (L < EDGE) {
-          alpha = alpha * ((L - BG) / (EDGE - BG));
-        }
-
-        data[i + 3] = alpha;
-
-        // 2. 선 색상 전처리
-        if (r > b && r > 50) {
+        if (r > b && r > g) {
+          // 빨간색 계열
           data[i] = targetRed.r;
           data[i + 1] = targetRed.g;
           data[i + 2] = targetRed.b;
-        } else if (b > r || g > r) {
+        } else {
+          // 파란색/청록색 계열
           data[i] = targetBlue.r;
           data[i + 1] = targetBlue.g;
           data[i + 2] = targetBlue.b;
@@ -137,7 +127,6 @@ export async function preprocessTrajectoryImage(originalUrl: string): Promise<st
       ctx.putImageData(imageData, 0, 0);
       resolve(canvas.toDataURL("image/png"));
     };
-
     img.onerror = (err) => reject(err);
   });
 }
