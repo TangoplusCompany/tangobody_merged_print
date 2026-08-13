@@ -20,47 +20,27 @@ export function BodyUpperLower({data}: {data: IReportDetail}) {
   const [leftKneeSrc, setleftKneeSrc] = useState<string>("");
   const [rightKneeSrc, setrightKneeSrc] = useState<string>("");
   useEffect(() => {
-    removeBlackBackground(staticUrl)
-      .then((result) => {
-        setstaticSrc(result);
-      })
-      .catch(() => {
-        setstaticSrc("");
-      });
+    let isMounted = true;
 
-      removeBlackBackground(dynamicUrl)
-      .then((result) => {
-        setdynamicSrc(result);
-      })
-      .catch(() => {
-        setdynamicSrc("");
-      });
+    const tasks = [
+      { url: staticUrl, fn: removeBlackBackground, setter: setstaticSrc },
+      { url: dynamicUrl, fn: removeBlackBackground, setter: setdynamicSrc },
+      { url: hipDownUrl, fn: preprocessTrajectoryImage, setter: sethipDownSrc },
+      { url: leftKneeUrl, fn: preprocessTrajectoryImage, setter: setleftKneeSrc },
+      { url: rightKneeUrl, fn: preprocessTrajectoryImage, setter: setrightKneeSrc },
+    ];
 
-      preprocessTrajectoryImage(hipDownUrl)
-      .then((result) => {
-        sethipDownSrc(result);
-      })
-      .catch(() => {
-        sethipDownSrc("");
-      });
+    tasks.forEach(({ url, fn, setter }) => {
+      if (!url) return;
+      fn(url)
+        .then((res) => isMounted && setter(res))
+        .catch(() => isMounted && setter(""));
+    });
 
-      preprocessTrajectoryImage(leftKneeUrl)
-      .then((result) => {
-        setleftKneeSrc(result);
-      })
-      .catch(() => {
-        setleftKneeSrc("");
-      });
-
-      preprocessTrajectoryImage(rightKneeUrl)
-      .then((result) => {
-        setrightKneeSrc(result);
-      })
-      .catch(() => {
-        setrightKneeSrc("");
-      });
-  }, [dynamicSrc, dynamicUrl, hipDownSrc, hipDownUrl, leftKneeSrc, leftKneeUrl, rightKneeSrc, rightKneeUrl, staticUrl]);
-
+    return () => {
+      isMounted = false;
+    };
+  }, [staticUrl, dynamicUrl, hipDownUrl, leftKneeUrl, rightKneeUrl]);
   const bgUpperCondition = {
       0: "bg-sub-200",
       1: "bg-orangee-600",
