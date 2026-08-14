@@ -4,8 +4,8 @@ export interface IMoireResponse {
   moire_result : IMoireDetail
 }
 export interface IMoireDetail {
-  front : IMoireSeq
-  back : IMoireSeq
+  front ?: IMoireSeq
+  back ?: IMoireSeq
   user_info: IUserInfo
 }
 export interface IMoireSeq {
