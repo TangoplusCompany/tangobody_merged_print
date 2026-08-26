@@ -52,7 +52,7 @@ export function MoireApp({ t_r }: IAppProps) {
             <div className='flex gap-8'>
               <span>이름: {data.moire_result.user_info.user_name}</span>
               <span>성별: {data.moire_result.user_info.gender === "남성" ? "남성" : "여성"}</span>
-              <span>현재 검사일: {data.moire_result.front.measure_date?.replace(/-/g, ".").slice(0, 11)} </span>
+              <span>현재 검사일: {data.moire_result.front!.measure_date?.replace(/-/g, ".").slice(0, 11)} </span>
             </div>
           </div>
         )}
