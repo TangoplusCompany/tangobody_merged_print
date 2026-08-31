@@ -4,38 +4,42 @@ import type { IRomCard } from "../../types/rom";
 
 export interface RawDataGraphProps {
   graphType: 0 | 1;
-  data: number[];
+  data?: number[]; // data가 undefined일 수 있도록 처리
   maxMinValue?: IRomCard;
 }
 
 export const RomDataGraph = ({
   graphType,
-  data, 
-  maxMinValue
+  data = [], // 기본값 빈 배열 할당
+  maxMinValue,
 }: RawDataGraphProps) => {
-  const chartData = data.map((value, index) => ({
-    frame: index,
-    value: value
-  }));
-  const maxValue = (graphType === 0 ? maxMinValue?.value_1_max : maxMinValue?.value_2_max) ?? 0
-  const minValue = (graphType === 0 ? maxMinValue?.value_1_min : maxMinValue?.value_2_min) ?? 0
+  // data가 없거나 undefined/null이어도 안전하게 빈 배열([]) 반환
+  const chartData = Array.isArray(data)
+    ? data.map((value, index) => ({
+        frame: index,
+        value: value,
+      }))
+    : [];
+
+  const maxValue = (graphType === 0 ? maxMinValue?.value_1_max : maxMinValue?.value_2_max) ?? 0;
+  const minValue = (graphType === 0 ? maxMinValue?.value_1_min : maxMinValue?.value_2_min) ?? 0;
 
   return (
     <div className="flex h-full flex-col rounded-lg border border-sub-100 overflow-hidden bg-white">
-      {/* 1. 상단 헤더: shrink-0으로 높이 고정 */}
+      {/* 1. 상단 헤더 */}
       <div className="flex justify-between shrink-0 p-0">
         <span className="text-[10px] font-semibold bg-accent text-white rounded-tl-[4px] rounded-br-[4px] px-2">
-          {graphType === 0 ? '각도 변화' : '각속도 변화'}
+          {graphType === 0 ? "각도 변화" : "각속도 변화"}
         </span>
 
         <div className="flex text-[10px] gap-2 text-sub-700 text-end leading-tight pr-2 pt-1">
-          <div>{graphType === 0 ? '최대' : '최대'}: {Math.abs(maxValue).toFixed(1)}°</div>
-          <div>{graphType === 0 ? '최소' : '최소'}: {Math.abs(minValue).toFixed(1)}°</div>
+          <div>최대: {Math.abs(maxValue).toFixed(1)}°</div>
+          <div>최소: {Math.abs(minValue).toFixed(1)}°</div>
         </div>
       </div>
 
-      {/* 2. 차트 영역: min-h-0으로 부모 밖 유출 방지 및 수직 중앙 정렬 */}
-      <div className="flex-1 flex items-center justify-center w-full min-h-0 overflow-hidden px-1"> 
+      {/* 2. 차트 영역 */}
+      <div className="flex-1 flex items-center justify-center w-full min-h-0 overflow-hidden px-1">
         <ChartContainer
           config={{
             value: {
@@ -43,12 +47,10 @@ export const RomDataGraph = ({
               color: "#2660E9",
             },
           }}
-          
-          className="w-full h-[56px]" 
+          className="w-full h-[56px]"
         >
-          
-          <AreaChart 
-            data={chartData} 
+          <AreaChart
+            data={chartData}
             margin={{ top: 5, right: 5, left: 5, bottom: 10 }}
           >
             <defs>
@@ -58,8 +60,7 @@ export const RomDataGraph = ({
               </linearGradient>
             </defs>
 
-            
-            <YAxis hide domain={[0, 'dataMax + 10']} />
+            <YAxis hide domain={[0, "dataMax + 10"]} />
 
             <Area
               dataKey="value"
@@ -69,7 +70,7 @@ export const RomDataGraph = ({
               strokeWidth={1}
               isAnimationActive={false}
             />
-            
+
             <CartesianGrid strokeDasharray="3 3" opacity={0.2} vertical={false} />
           </AreaChart>
         </ChartContainer>
@@ -78,4 +79,4 @@ export const RomDataGraph = ({
   );
 };
 
-export default RomDataGraph
+export default RomDataGraph;
