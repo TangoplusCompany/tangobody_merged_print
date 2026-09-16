@@ -254,3 +254,40 @@ export type titles =
   '[오른측면] 왼쪽 발등 굽힘 검사' |
   '[오른측면] 왼쪽 발바닥 굽힘 검사';
   
+
+  export type titleKeys = 
+  'rom_neck_lat_flex_left' |
+  'rom_neck_lat_flex_right' |
+  'rom_neck_ext' | 
+  'rom_neck_flex' | 
+  'rom_sh_abd_left' | 
+  'rom_sh_abd_right' | 
+  'rom_sh_flex_left' | 
+  'rom_sh_flex_right' | 
+  'rom_sh_ext_left' | 
+  'rom_sh_ext_right' | 
+  'rom_sh_ext_rot_left' | 
+  'rom_sh_ext_rot_right' | 
+  'rom_sh_int_rot_left' | 
+  'rom_sh_int_rot_right' | 
+  'rom_elbow_flex_left' | 
+  'rom_elbow_flex_right' | 
+  'rom_trunk_flex' | 
+  'rom_trunk_ext' | 
+  'rom_trunk_lat_flex_left' | 
+  'rom_trunk_lat_flex_right' | 
+  'rom_hip_abd_left' | 
+  'rom_hip_abd_right' | 
+  'rom_hip_ext_left' | 
+  'rom_hip_ext_right' | 
+  'rom_hip_flex_left' | 
+  'rom_hip_flex_right' |
+
+    
+  'rom_ankle_dorsi_left' |
+  'rom_ankle_plantar_left' |
+  'rom_ankle_dorsi_right' |
+  'rom_ankle_plantar_right' |
+  'rom_knee_flex_left' |
+  'rom_knee_flex_right';
+  

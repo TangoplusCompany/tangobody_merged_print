@@ -38,8 +38,9 @@ import ankle_side_instep_fold_left from '../../assets/ankle_side_instep_fold_lef
 import ankle_side_instep_fold_right from '../../assets/ankle_side_instep_fold_right.png';
 import ankle_side_sole_fold_left from '../../assets/ankle_side_sole_fold_left.png';
 import ankle_side_sole_fold_right from '../../assets/ankle_side_sole_fold_right.png';
-import type { IRomDetail, titles } from '../../types/rom';
+import type { IRomDetail, titleKeys, titles } from '../../types/rom';
 import { useGetRomGraph } from '../../hooks/rom/useGetRomGraph';
+import { useTranslation } from 'react-i18next';
 
 const imgName: Record<titles, string> = {
   '[정면] 목 가쪽 굽힘 검사 - 왼쪽': neck_fold_left, 
@@ -80,8 +81,47 @@ const imgName: Record<titles, string> = {
 
   '[왼측면] 무릎관절 굽힘 검사': knee_fold_left,
   '[오른측면] 무릎관절 굽힘 검사': knee_fold_right,
-
 }
+
+const titleKeyMap: Record<titles, titleKeys> = {
+  '[정면] 목 가쪽 굽힘 검사 - 왼쪽': 'rom_neck_lat_flex_left',
+  '[정면] 목 가쪽 굽힘 검사 - 오른쪽': 'rom_neck_lat_flex_right',
+  '[측면] 목 굽힘 검사': 'rom_neck_flex',
+  '[측면] 목 폄 검사': 'rom_neck_ext',
+
+  '[정면] 어깨 벌림 검사 - 왼쪽': 'rom_sh_abd_left',
+  '[정면] 어깨 벌림 검사 - 오른쪽': 'rom_sh_abd_right',
+  '[왼측면] 어깨 굽힘 검사': 'rom_sh_flex_left',
+  '[오른측면] 어깨 굽힘 검사': 'rom_sh_flex_right',
+  '[왼측면] 어깨 폄 검사': 'rom_sh_ext_left',
+  '[오른측면] 어깨 폄 검사': 'rom_sh_ext_right',
+  '[왼측면] 어깨 가쪽 돌림 검사': 'rom_sh_ext_rot_left',
+  '[오른측면] 어깨 가쪽 돌림 검사': 'rom_sh_ext_rot_right',
+  '[왼측면] 어깨 안쪽 돌림 검사': 'rom_sh_int_rot_left',
+  '[오른측면] 어깨 안쪽 돌림 검사': 'rom_sh_int_rot_right',
+
+  '[왼측면] 팔꿉 관절 굽힘 검사': 'rom_elbow_flex_left',
+  '[오른측면] 팔꿉 관절 굽힘 검사': 'rom_elbow_flex_right',
+
+  '[정면] 몸통 왼쪽 가쪽 굽힘': 'rom_trunk_lat_flex_left',
+  '[정면] 몸통 오른쪽 가쪽 굽힘': 'rom_trunk_lat_flex_right',
+  '[측면] 몸통 굽힘 검사': 'rom_trunk_flex',
+  '[측면] 몸통 폄 검사': 'rom_trunk_ext',
+
+  '[정면] 왼쪽 엉덩관절 벌림 검사': 'rom_hip_abd_left',
+  '[정면] 오른쪽 엉덩관절 벌림 검사': 'rom_hip_abd_right',
+  '[왼측면] 엉덩관절 굽힘 검사': 'rom_hip_flex_left',
+  '[오른측면] 엉덩관절 굽힘 검사': 'rom_hip_flex_right',
+  '[왼측면] 엉덩관절 폄검사': 'rom_hip_ext_left',
+  '[오른측면] 엉덩관절 폄검사': 'rom_hip_ext_right',
+
+  '[왼측면] 무릎관절 굽힘 검사': 'rom_knee_flex_left',
+  '[오른측면] 무릎관절 굽힘 검사': 'rom_knee_flex_right',
+  '[왼측면] 왼쪽 발등 굽힘 검사': 'rom_ankle_dorsi_left',
+  '[왼측면] 왼쪽 발바닥 굽힘 검사': 'rom_ankle_plantar_left',
+  '[오른측면] 왼쪽 발등 굽힘 검사': 'rom_ankle_dorsi_right',
+  '[오른측면] 왼쪽 발바닥 굽힘 검사': 'rom_ankle_plantar_right',
+};
 
 
 const getLevelValue = (value: number, data: IRomDetail) => {
@@ -108,7 +148,7 @@ const getBgLevelValue = (value: number, data: IRomDetail) => {
 };
 
 export default function UnitCard({ data }: { data: IRomDetail }) {
-
+  const {t} = useTranslation();
   const stateBarColor = {
     0: "bg-redd-600/75 w-[23.9%]",
     1: "bg-orangee-600/75 w-[48.9%]",
@@ -119,14 +159,13 @@ export default function UnitCard({ data }: { data: IRomDetail }) {
   const { data: romJson, isLoading: jsonLoading, isError: jsonError } = useGetRomGraph(
     data?.measure_server_data_json_name
   );
-  if (jsonLoading) return <div>로딩중..</div>;
+  if (jsonLoading) return <div>{t('loading')}</div>;
   if (jsonError) return <div>occured Error</div>;
   return (
     <div className="w-full h-full flex flex-col gap-2 rounded-xl border border-sub-400  p-1">
-      {/* 1. 타이틀 영역 */}
-      <div className="flex text-sm font-bold gap-2 mt-2 ml-2 items-center ">
-        <div className='w-4 h-4 rounded-[2px] bg-accent' />
-        {data.title}
+      <div className="flex text-sm print:text-xs font-bold gap-2 mt-2 ml-2 items-center ">
+        <div className='w-4 h-4 print:w-3 print:h-3 rounded-[4px] bg-accent' />
+        {t(titleKeyMap[data.title as titles])}
       </div>
 
       {/* 2. 상단 정보 섹션 */}
@@ -137,7 +176,7 @@ export default function UnitCard({ data }: { data: IRomDetail }) {
 
         <div className='flex flex-col flex-1'>
           <div className='flex justify-between items-end'>
-            <p className="text-sm font-bold text-sub-800">최대각도: <span className="text-sub-800 font-bold">{data.value_1_max.toFixed(1)}°</span></p>
+            <p className="text-sm print:text-xs font-bold text-sub-800">{t('rom_max_value')}: <span className="text-sub-800 font-bold">{data.value_1_max.toFixed(1)}°</span></p>
           </div>
           <p className="text-[10px] text-sub-600 leading-tight line-clamp-2 h-[24px] overflow-hidden text-start">
             {data.description}
@@ -149,19 +188,19 @@ export default function UnitCard({ data }: { data: IRomDetail }) {
             <div className="absolute top-0 w-full flex justify-between px-1">
               {/* 각 섹션(1/4)을 flex-col로 묶어 수직 정렬 */}
               <div className="w-1/4 flex flex-col items-center leading-tight">
-                <span className="text-[10px] font-bold text-gray-400">매우 양호</span>
+                <span className="text-[10px] font-bold text-gray-400">{t('rom_excellent')}</span>
                 <span className="text-[10px] font-medium text-gray-400">{data.max_value}°</span>
               </div>
               <div className="w-1/4 flex flex-col items-center leading-tight">
-                <span className="text-[10px] font-bold text-gray-400">정상</span>
+                <span className="text-[10px] font-bold text-gray-400">{t('rom_normal')}</span>
                 <span className="text-[10px] font-medium text-gray-400">{data.normal_normal}°</span>
               </div>
               <div className="w-1/4 flex flex-col items-center leading-tight">
-                <span className="text-[10px] font-bold text-gray-400">주의</span>
+                <span className="text-[10px] font-bold text-gray-400">{t('rom_caution')}</span>
                 <span className="text-[10px] font-medium text-gray-400">{data.normal_warning}°</span>
               </div>
               <div className="w-1/4 flex flex-col items-center leading-tight">
-                <span className="text-[10px] font-bold text-gray-400">위험</span>
+                <span className="text-[10px] font-bold text-gray-400">{t('rom_danger')}</span>
                 <span className="text-[10px] font-medium text-gray-400">{data.normal_bad}°</span>
               </div>
             </div>

@@ -1,6 +1,7 @@
 import { Area, AreaChart, CartesianGrid, YAxis } from "recharts";
 import { ChartContainer } from "../ui/chart";
 import type { IRomCard } from "../../types/rom";
+import { useTranslation } from "react-i18next";
 
 export interface RawDataGraphProps {
   graphType: 0 | 1;
@@ -13,7 +14,7 @@ export const RomDataGraph = ({
   data = [], // 기본값 빈 배열 할당
   maxMinValue,
 }: RawDataGraphProps) => {
-  // data가 없거나 undefined/null이어도 안전하게 빈 배열([]) 반환
+  const {t} = useTranslation()
   const chartData = Array.isArray(data)
     ? data.map((value, index) => ({
         frame: index,
@@ -29,12 +30,12 @@ export const RomDataGraph = ({
       {/* 1. 상단 헤더 */}
       <div className="flex justify-between shrink-0 p-0">
         <span className="text-[10px] font-semibold bg-accent text-white rounded-tl-[4px] rounded-br-[4px] px-2">
-          {graphType === 0 ? "각도 변화" : "각속도 변화"}
+          {graphType === 0 ? t('rom_angle') : t('rom_velocity')}
         </span>
 
         <div className="flex text-[10px] gap-2 text-sub-700 text-end leading-tight pr-2 pt-1">
-          <div>최대: {Math.abs(maxValue).toFixed(1)}°</div>
-          <div>최소: {Math.abs(minValue).toFixed(1)}°</div>
+          <div>{t('max')}: {Math.abs(maxValue).toFixed(1)}°</div>
+          <div>{t('min')}: {Math.abs(minValue).toFixed(1)}°</div>
         </div>
       </div>
 
@@ -43,7 +44,7 @@ export const RomDataGraph = ({
         <ChartContainer
           config={{
             value: {
-              label: graphType === 0 ? "각도" : "각속도",
+              label: graphType === 0 ? t('rom_angle') : t('rom_velocity'),
               color: "#2660E9",
             },
           }}

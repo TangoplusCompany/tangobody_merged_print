@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { IBasicCards, IBasicCardUnit, IBasicInfo, IReportDetail } from "../../types/basic";
 import { getRiskString } from "../../utils/getRiskString";
 
@@ -9,6 +10,8 @@ interface PartRawDataProps {
 
 
 export function PartRawData({ data, rawData, summaryData }: PartRawDataProps) {
+  const {t, i18n} = useTranslation();
+  const locale = i18n.language;
   function getRiskBgColor(riskLevel: number): string {
     const colorMap: Record<number, string> = {
       0: "bg-sub-100 text-sub-200", // 정상 혹은 낮은 단계
@@ -40,38 +43,38 @@ export function PartRawData({ data, rawData, summaryData }: PartRawDataProps) {
     1: "bg-orangee-600",
     2: "bg-redd-600",
   }[currentRiskLevel] ?? "bg-sub-200";
-    const riskString = getRiskString(currentRiskLevel);
+  const riskString = getRiskString(currentRiskLevel, locale);
 
 
 
   const titleMap: Record<keyof IBasicCards, string> = {
-    neck: "목",
-    shoulder: "어깨",
-    elbow: "팔꿈치",
-    hip: "골반",
-    knee: "무릎",
-    ankle: "발목"
+    neck: "basic_neck",
+    shoulder: "basic_shoulder",
+    elbow: "basic_elbow",
+    hip: "basic_pelvis",
+    knee: "basic_knee",
+    ankle: "basic_ankle"
   };
-  // TODO q
+
   const detailTitleMap: Record<string, string> = {
-    turtle_neck: "거북목",
-    scoliosis: "경추 측만",
-    side_neck_balance: "측면 목 근육",
-    shoulder_tilit: "어깨 기울기",
-    frozen_shoulder: "오십견",
-    shoulder_impingement: "어깨 충돌 증후군",
-    bicep_tension: "이두근 긴장",
-    elbow_disorder: "팔꿈치 질환",
-    elbow_muscle_tension: "팔꿈치 아래팔 근육 긴장",
-    hip_tilit: "골반 기울기",
-    hip_disorder: "골반 질환",
-    hip_knee_tilit: "골반,무릎 기울기 (측면)",
-    knee_angle: "골반,무릎 각도 (정면)",
-    knee_disorder: "무릎 질환",
-    hip_knee_ankle_tilit: "골반,무릎,발목 기울기",
-    ankle_angle: "발목 각도",
-    left_right_balance: "족압 분포-좌우",
-    uppper_lower_balance: "상하 무게 균형",
+    turtle_neck: "basic_turtle_neck",
+    scoliosis: "basic_scoliosis",
+    side_neck_balance: "basic_side_neck_balance",
+    shoulder_tilit: "basic_shoulder_tilit",
+    frozen_shoulder: "basic_frozen_shoulder",
+    shoulder_impingement: "basic_shoulder_impingement",
+    bicep_tension: "basic_bicep_tension",
+    elbow_disorder: "basic_elbow_disorder",
+    elbow_muscle_tension: "basic_elbow_muscle_tension",
+    hip_tilit: "basic_hip_tilit",
+    hip_disorder: "basic_hip_disorder",
+    hip_knee_tilit: "basic_hip_knee_tilit",
+    knee_angle: "basic_knee_angle",
+    knee_disorder: "basic_knee_disorder",
+    hip_knee_ankle_tilit: "basic_hip_knee_ankle_tilit",
+    ankle_angle: "basic_ankle_angle",
+    left_right_balance: "basic_left_right_balance",
+    uppper_lower_balance: "basic_uppper_lower_balance",
   };
 
   const title: string = titleMap[data] || "알 수 없음";
@@ -82,11 +85,11 @@ export function PartRawData({ data, rawData, summaryData }: PartRawDataProps) {
 
   return (
     <div className="grid grid-cols-[1fr_3fr] border-b border-sub-200 last:border-b-0 w-full h-full">
-      <div className={`bg-sub-100 font-bold p-2 flex items-center justify-center print:text-[14px] print:text-[12px] `}>
+      <div className={`bg-sub-100 font-bold p-2 flex items-center justify-center print:text-[12px] `}>
         <div className="flex flex-col">
-          {title} 
-          <span className={`${bgCondition} text-white text-[9px] font-bold px-2 py-0.5 print:py-0 rounded-full shrink-0 mt-1`}>
-            {riskString} {currentRangeLevel}단계
+          {t(title)} 
+          <span className={`${bgCondition} text-white text-[9px] font-bold px-2 py-0.5 print:py-0 rounded-full shrink-0 mt-1 print:text-[8px] `}>
+            {riskString} {currentRangeLevel}{t('basic_level')}
           </span>
         </div>
       </div>
@@ -101,8 +104,8 @@ export function PartRawData({ data, rawData, summaryData }: PartRawDataProps) {
           const arrowClass = getArrowColor(riskLevel);
           return (
             <div key={rawKey} className="h-full grid grid-cols-[30%_70%] border-b last:border-b-0 items-center">
-              <span className="text-sub-800 text-[9px] print:text-[8px] leading-none items-center flex justify-center text-center p-1 print:p-0">
-                {detailTitle}
+              <span className="text-sub-800 text-[9px] print:text-[8px] leading-none items-center flex justify-center text-center print:p-0">
+                {t(detailTitle)}
               </span>
 
               <div className="grid grid-rows-2 w-full h-full text-center text-[8px] font-bold leading-none">
@@ -141,7 +144,7 @@ export function PartRawData({ data, rawData, summaryData }: PartRawDataProps) {
                       {/* 현재 riskLevel 위치에만 X단계 텍스트 표시 */}
                       {riskLevel === idx && (
                         <span className={`${styleClass.split(" ")[1]}`}>
-                          {rangeLevel}단계
+                          {rangeLevel}{t('basic_level')}
                         </span>
                       )}
                     </div>

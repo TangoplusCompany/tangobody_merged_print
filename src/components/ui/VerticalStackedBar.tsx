@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 export interface SegmentData {
   label: string;
   percentage: number;
@@ -15,6 +17,7 @@ export default function VerticalStackedBar({
   width = 30,
   gap = 2,
 }: VerticalStackedBarProps) {
+  const {t} = useTranslation();
   return (
     <div 
       className="flex flex-col h-full" 
@@ -39,7 +42,7 @@ export default function VerticalStackedBar({
               ${isLast ? 'rounded-b-[4px]' : ''}
               ${!segment.color.startsWith('#') ? segment.color : ''}
             `}
-            title={`${segment.label}: ${segment.percentage.toFixed(1)}%`}
+            title={`${t(segment.label)}: ${segment.percentage.toFixed(1)}%`}
           />
         );
       })}

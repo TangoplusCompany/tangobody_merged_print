@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { usePostRomData } from "../../hooks/rom/usePostRomData";
 import logoWhite from '../../assets/logo_white.png';
 import UnitCardContainer from "./UnitCardContainer";
+import { useTranslation } from "react-i18next";
 
 export interface IRomAppProps {
   t_r: string;
@@ -9,7 +10,7 @@ export interface IRomAppProps {
 
 
 export function RomApp({ t_r }: IRomAppProps) {
-  
+  const {t} = useTranslation();
   const { mutate, pairedData, isPending, isError } = usePostRomData();
 
   useEffect(() => {
@@ -22,11 +23,11 @@ export function RomApp({ t_r }: IRomAppProps) {
     pairedData.slice(i * 3, i * 3 + 3)
   ) : [];
 
-  if (isPending) return <div className="flex h-screen items-center justify-center">로딩 중...</div>;
+  if (isPending) return <div className="flex h-screen items-center justify-center">{t('loading')}</div>;
   if (!t_r || isError || (pairedData && pairedData.length === 0)) {
     return (
       <div className="print:hidden flex flex-col h-screen items-center justify-center gap-4">
-        <div className="text-xl font-bold text-red-500">올바르지 않은 데이터입니다.</div>
+        <div className="text-xl font-bold text-red-500">{t('invalid_data')}</div>
       </div>
     );
   }
@@ -46,9 +47,9 @@ export function RomApp({ t_r }: IRomAppProps) {
                     </div>
                     <div className='justify-center px-3 bg-white flex flex-col rounded-[2px] text-[12px] text-center '>
                       <div className='flex justify-between gap-8 text-sub-800'>
-                        <span>이름: {pairedData[0].left.user_name}</span>
-                        <span>성별: {pairedData[0].left.gender}</span>
-                        <span>검사일: {pairedData[0].left.reg_date.slice(0, 11).replaceAll("-", ".")}</span>
+                        <span>{t('name')}: {pairedData[0].left.user_name}</span>
+                        <span>{t('gender')}: {pairedData[0].left.gender}</span>
+                        <span>{t('current_test_date')}: {pairedData[0].left.reg_date.slice(0, 11).replaceAll("-", ".")}</span>
                       </div>
                     </div>
                   </div>

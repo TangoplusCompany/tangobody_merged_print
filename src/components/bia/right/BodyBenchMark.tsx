@@ -8,6 +8,7 @@ import bt6 from '../../../assets/bt_6.png';
 import bt7 from '../../../assets/bt_7.png';
 import bt8 from '../../../assets/bt_8.png';
 import bt9 from '../../../assets/bt_9.png';
+import { useTranslation } from 'react-i18next';
 
 
 interface MetricItem {
@@ -23,6 +24,7 @@ interface MetricListProps {
 }
 
 function MetricList({ title, titleValue, items }: MetricListProps) {
+  const {t} = useTranslation()
   return (
     <div className="flex flex-col w-full gap-1">
       {/* 상단 메인 타이틀 (빨간색 강조) */}
@@ -37,7 +39,7 @@ function MetricList({ title, titleValue, items }: MetricListProps) {
       <div className="flex flex-col text-[12px] text-black leading-[1.75]">
         {items.map((item, index) => (
           <div key={index} className="flex justify-between items-center ">
-            <span className="font-medium text-sub-600">{item.label}</span>
+            <span className="font-medium text-sub-600">{t(item.label)}</span>
             <span className="font-bold">
               {item.value}
               {item.unit && <span className="ml-0.5 font-normal">{item.unit}</span>}
@@ -50,35 +52,36 @@ function MetricList({ title, titleValue, items }: MetricListProps) {
 }
 
 export default function BodyBenchMark({data}: {data: IBodyBenchmark}) {
+  const {t} = useTranslation()
   const radius = 60;
   const strokeWidth = 12;
   const normalizedRadius = radius - strokeWidth / 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (data.body_score / 100) * circumference;
   const healthMetrics = [
-    { label: "목표 체중", value: data.target_weight, unit: "kg" },
-    { label: "지방 조절량", value: data.fat_control_amount, unit: "kg" },
-    { label: "근육 조절량", value: data.muscle_control, unit: "kg" },
-    { label: "권장섭취열량", value: data.recommended_intake_kcal, unit: "kcal" },
-    { label: "제지방량", value: data.lean_body_weight, unit: "kg" },
-    { label: "근육량", value: data.muscle_mass, unit: "kg" },
-    { label: "골량", value: data.bone_mass, unit: "kg" },
-    { label: "세포질량", value: data.body_cell_mass, unit: "kg" },
-    { label: "복부/내장지방 관련", value: data.waist_to_hip_ratio, unit: "" },
-    { label: "표준 체중 대비 체중 비율", value: data.obesity_percentage, unit: "%" },
-    { label: "피하지방", value: data.subcutaneous_fat_rate, unit: "%" },
+    { label: "bia_target_weight", value: data.target_weight, unit: "kg" },
+    { label: "bia_fat_control", value: data.fat_control_amount, unit: "kg" },
+    { label: "bia_muscle_control", value: data.muscle_control, unit: "kg" },
+    { label: "bia_recommended_intake", value: data.recommended_intake_kcal, unit: "kcal" },
+    { label: "bia_lean_mass", value: data.lean_body_weight, unit: "kg" },
+    { label: "bia_muscle_mass", value: data.muscle_mass, unit: "kg" },
+    { label: "bia_bone_mass", value: data.bone_mass, unit: "kg" },
+    { label: "bia_body_cell_mass", value: data.body_cell_mass, unit: "kg" },
+    { label: "bia_whr", value: data.waist_to_hip_ratio, unit: "" },
+    { label: "bia_obesity_rate", value: data.obesity_percentage, unit: "%" },
+    { label: "bia_subcutaneous_fat", value: data.subcutaneous_fat_rate, unit: "%" },
   ];
 
   const bodyType = {
-    1: "마른형",
-    2: "슬림 근육형",
-    3: "근육형",
-    4: "비만형",
-    5: "살집 있는 근육형",
-    6: "근육질 비만형 ",
-    7: "운동 부족형",
-    8: "표준형",
-    9: "표준 근육형"
+    1: "bia_body_type_1",
+    2: "bia_body_type_2",
+    3: "bia_body_type_3",
+    4: "bia_body_type_4",
+    5: "bia_body_type_5",
+    6: "bia_body_type_6 ",
+    7: "bia_body_type_7",
+    8: "bia_body_type_8",
+    9: "bia_body_type_9"
   }[data.body_type]
 
   const bodyTypeImg = {
@@ -95,7 +98,7 @@ export default function BodyBenchMark({data}: {data: IBodyBenchmark}) {
   return (
     <div className='flex flex-col'>
       <div className='flex w-fit bg-accent rounded-br-xl rounded-tl-xl text-base text-white font-semibold px-2 py-1'>
-        주요건강 지표
+        {t('bia_key_health_metrics')}
       </div>
 
      
@@ -134,7 +137,7 @@ export default function BodyBenchMark({data}: {data: IBodyBenchmark}) {
             <span className="text-5xl font-bebas font-bold text-gray-600 leading-none">
               {data.body_score}
             </span>
-            <span className="text-lg font-bold text-gray-500 ml-1">점</span>
+            <span className="text-lg font-bold text-gray-500 ml-1">{t('bia_unit_point')}</span>
           </div>
         </div>
       </div>
@@ -150,7 +153,7 @@ export default function BodyBenchMark({data}: {data: IBodyBenchmark}) {
           </img>
           <div className='flex flex-col gap-0.5'>
             <div className='text-[12px] font-bold text-black'>
-              {bodyType}
+              {t(bodyType ?? "")}
             </div>
             <div className='text-[10px] leading-[1.3] break-keep text-black'>
               {data.result_body_type_description}
@@ -160,7 +163,7 @@ export default function BodyBenchMark({data}: {data: IBodyBenchmark}) {
 
         <div className='grid grid-rows-[40%_60%] gap-4 h-full'>
           <MetricList 
-            title="체중 조절량" 
+            title={t('bia_weight_control_amount')}
             titleValue={`${data.weight_control}kg`} 
             items={healthMetrics} 
           />

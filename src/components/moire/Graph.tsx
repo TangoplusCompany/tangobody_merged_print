@@ -3,6 +3,7 @@ import { useId, useMemo } from "react";
 import type { IMoireGraphTitle } from "./Container";
 import { ChartContainer } from "../ui/chart";
 import { removeOutliersIQR } from "../../utils/graph";
+import { useTranslation } from "react-i18next";
 
 export interface IMoireGraphProps {
   title: IMoireGraphTitle;
@@ -21,6 +22,7 @@ interface CustomDotProps {
 }
 
 export default function MoireGraph({ graphData }: { graphData: IMoireGraphProps }) {
+  const {t} = useTranslation()
   const uniqueId = useId().replace(/:/g, "");
 
   // 1차원 숫자 배열을 Recharts용 데이터로 변환
@@ -94,13 +96,13 @@ export default function MoireGraph({ graphData }: { graphData: IMoireGraphProps 
     );
   };
 
-  const subTitle: string = graphData.title.includes("허리") ? "중심선 편위" : "높이 차";
+  const subTitle: string = graphData.title.includes("pelvis") ? "moire_midline_deviation" : "moire_height_diff";
 
   return (
     <div className="flex flex-col rounded-xl border-2 border-sub200 p-2 bg-white">
       {/* Header */}
       <div className="flex w-full items-center justify-between mb-2">
-        <span className="text-xs font-semibold text-sub-700">{graphData.title}</span>
+        <span className="text-xs font-semibold text-sub-700">{t(graphData.title)}</span>
       </div>
 
       <div className="grid grid-cols-[70%_30%] gap-1">
@@ -154,10 +156,11 @@ export default function MoireGraph({ graphData }: { graphData: IMoireGraphProps 
         </ChartContainer>
 
         <div className="flex flex-col gap-0.5 py-2">
-          <span className="text-xs sm:text-sm font-semibold text-sub700">
-            {subTitle} {Math.abs(graphData.leftValue - graphData.rightValue).toFixed(1)} {graphData.unit}
-          </span>
-          <div className="flex gap-2 text-xs sm:text-sm font-semibold">
+          <div className="flex flex-col text-xs print:text-[10px] font-semibold text-sub700">
+            <span className="">{t(subTitle)}</span>
+            <span className=""> {Math.abs(graphData.leftValue - graphData.rightValue).toFixed(1)} {graphData.unit}</span>
+          </div>
+          <div className="flex gap-2 text-xs print:text-[10px] font-semibold items-center justify-center">
             <span className="text-mainBlue-300">L {(graphData.leftValue / 100).toFixed(2)} {graphData.unit.replace("c", "")}</span>
             <span className="text-mainGreen-600">R {(graphData.rightValue / 100).toFixed(2)} {graphData.unit.replace("c", "")}</span>
           </div>

@@ -1,16 +1,17 @@
+import { useTranslation } from "react-i18next";
 import FootPrintIcon from "./FootPrintIcon";
 import type { GaitContainerProps } from "./GaitApp";
 import GaitGaugeChart from "./GuageChart";
 
 export default function GaitBalance({data}: GaitContainerProps) {
-  
+  const {t} = useTranslation()
   return (
     <div className="flex flex-col h-fit border border-sub-200 rounded-[6px] p-2 gap-2">
 
       <div className="flex items-center gap-2 ">
         <div className="bg-accent w-3 h-3 rounded-[4px]"/>
-        <div className="text-accent text-sm font-bold ">
-          02 보행 밸런스 및 보행 주기 균형
+        <div className="text-accent text-sm print:text-xs  font-bold ">
+          {t('gait_section_balance')}
         </div>
       </div>
 
@@ -19,27 +20,27 @@ export default function GaitBalance({data}: GaitContainerProps) {
         <div className="flex flex-col">
           
           <div className="text-sub-800 text-xs font-bold text-start">
-            보행 시 좌우 지지 비율
+            {t('gait_lr_support_ratio')}
           </div>
 
           <div className="flex flex-1 w-full justify-center mt-6">
             <GaitGaugeChart
               left={{
-                label: "왼발",
+                label: "gait_support_left",
                 percent: data.avgLeftSingleSupportRatio,
-                time: `${data.avgDoubleSupportTime.toFixed(1)}초`,
+                time: `${data.avgDoubleSupportTime.toFixed(1)}${t('gait_unit_second')}`,
                 color: { id: "leftGrad", start: "#5B93FF00", end: "#5B93FF" },
               }}
               both={{
-                label: "양발 지지",
+                label: "gait_support_both",
                 percent: data.avgDoubleSupportRatio,
-                time: `${data.avgLeftSingleSupportTime.toFixed(1)}초`,
+                time: `${data.avgLeftSingleSupportTime.toFixed(1)}${t('gait_unit_second')}`,
                 color: { id: "bothGrad", start: "#7E7E7E00", end: "#7E7E7E" },
               }}
               right={{
-                label: "오른발 지지",
+                label: "gait_support_right",
                 percent: data.avgRightSingleSupportRatio,
-                time: `${data.avgRightSingleSupportTime.toFixed(1)}초`,
+                time: `${data.avgRightSingleSupportTime.toFixed(1)}${t('gait_unit_second')}`,
                 color: { id: "rightGrad", start: "#49D68F00", end: "#49D68F" },
               }}
             />
@@ -52,13 +53,13 @@ export default function GaitBalance({data}: GaitContainerProps) {
         
         <div className="flex flex-col gap-1">
           <div className="text-start text-sub-800 text-xs font-bold ">
-              보행 주기 균형
+              {t('gait_cycle_balance')}
             </div>
           
           <div className="grid grid-cols-[25%_37.5%_37.5%] items-center text-xs text-sub-300 font-semibold">
             <span></span>
-            <span>입각기</span>
-            <span>유각기</span>
+            <span>{t('gait_stance_phase')}</span>
+            <span>{t('gait_swing_phase')}</span>
           </div>
           
 

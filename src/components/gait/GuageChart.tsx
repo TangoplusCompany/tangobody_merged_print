@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import FootPrintIcon from "./FootPrintIcon";
 
 interface GaitData {
@@ -68,6 +69,7 @@ function describeOuterArc(
 }
 
 export default function GaitGaugeChart({ left, both, right }: GaitGaugeChartProps) {
+  const {t} = useTranslation()
   const cx = 200;
   const cy = 200;
   const innerR = 100;
@@ -121,8 +123,8 @@ export default function GaitGaugeChart({ left, both, right }: GaitGaugeChartProp
           const txMid = cx + textRMid * Math.sin(radMid);
           const tyMid = cy - textRMid * Math.cos(radMid);
 
-          const chars = item.label.split("");
-          const charAngleGap = 3.5;
+          const chars = t(item.label).split("");
+          const charAngleGap = 2.0;
           const totalLabelSweep = (chars.length - 1) * charAngleGap;
           const labelStartAngle = item.midAngle - totalLabelSweep / 2;
 
@@ -143,7 +145,7 @@ export default function GaitGaugeChart({ left, both, right }: GaitGaugeChartProp
                     key={index}
                     x={charX}
                     y={charY}
-                    className="text-[13px] font-bold"
+                    className="text-base font-bold"
                     style={{ fill: item.color.end }}
                     textAnchor="middle"
                     dominantBaseline="central"
@@ -169,7 +171,7 @@ export default function GaitGaugeChart({ left, both, right }: GaitGaugeChartProp
         <g transform={`translate(${cx - 55}, ${cy - 35})`}>
           <rect x="0" y="0" width="110" height="26" rx="13" fill="#EDEDED" stroke="#EDEDED" strokeWidth="1.5" />
           <text x="55" y="13" textAnchor="middle" dominantBaseline="central" className="text-sub700 text-[11px] font-medium">
-            좌우 균형 분석
+            {t('gait_lr_balance')}
           </text>
         </g>
 

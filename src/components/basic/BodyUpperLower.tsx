@@ -3,22 +3,74 @@ import { getRiskString } from "../../utils/getRiskString";
 import { preprocessTrajectoryImage, removeBlackBackground } from "../../utils/removeBlackBackground";
 import body from "../../assets/img_body.png";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { translateKoToEn } from "../../utils/translate";
+interface IMents {
+  upperMent: string;
+  lowerMent: string;
+  StaticMatH: string;
+  StaticMatV: string;
+  DynamicMatH: string;
+  DynamicMatV: string;
+  knee: string;
+}
 
 export function BodyUpperLower({data}: {data: IReportDetail}) {
 
+  const {t, i18n} = useTranslation();
+  const locale = i18n.language
+  const isKo = locale.startsWith('ko');
+  const rawData: IMents = {
+    upperMent: data.result_summary_data?.risk_upper_ment || '',
+    lowerMent: data.result_summary_data?.risk_lower_ment || '',
+    StaticMatH: data.static_mat_data?.mat_static_horizontal_ment || '',
+    StaticMatV: data.static_mat_data?.mat_static_vertical_ment || '',
+    DynamicMatH: data.dynamic_mat_data?.mat_ohs_horizontal_ment || '',
+    DynamicMatV: data.dynamic_mat_data?.mat_ohs_vertical_ment || '',
+    knee: data.dynamic_mat_data?.mat_ohs_knee_ment || '',
+  };
+
+  const [translatedMents, setTranslatedMents] = useState<IMents | null>(null);
+
+  useEffect(() => {
+    if (isKo) return;
+
+    let isMounted = true;
+    Promise.all([
+      translateKoToEn(rawData.upperMent),
+      translateKoToEn(rawData.lowerMent),
+      translateKoToEn(rawData.StaticMatH),
+      translateKoToEn(rawData.StaticMatV),
+      translateKoToEn(rawData.DynamicMatH),
+      translateKoToEn(rawData.DynamicMatV),
+      translateKoToEn(rawData.knee),
+    ])
+      .then(([upperMent = '', lowerMent = '', StaticMatH = '', StaticMatV = '',DynamicMatH = '',DynamicMatV = '' , knee = '']) => {
+        if (isMounted) {
+          setTranslatedMents({ upperMent, lowerMent, StaticMatH, StaticMatV, DynamicMatH, DynamicMatV, knee });
+        }
+      })
+      .catch(console.error);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isKo, data]);
+  const ments = isKo || !translatedMents ? rawData : translatedMents;
 
   const staticUrl = `${data.static_mat_data.measure_server_mat_image_name}`;
   const dynamicUrl = `${data.dynamic_mat_data.mat_hip_down_image_name}`;
   const hipDownUrl = `${data.dynamic_mat_data.mat_hip_trajectory_image_name}`;
   const leftKneeUrl = `${data.dynamic_mat_data.mat_left_knee_trajectory_image_name}`;
   const rightKneeUrl = `${data.dynamic_mat_data.mat_right_knee_trajectory_image_name}`;
-  const riskUpperString = getRiskString(data.result_summary_data.risk_upper_risk_level);
-  const riskLowerString = getRiskString(data.result_summary_data.risk_lower_risk_level);
+  const riskUpperString = getRiskString(data.result_summary_data.risk_upper_risk_level, locale);
+  const riskLowerString = getRiskString(data.result_summary_data.risk_lower_risk_level, locale);
   const [staticSrc, setstaticSrc] = useState<string>("");
   const [dynamicSrc, setdynamicSrc] = useState<string>("");
   const [hipDownSrc, sethipDownSrc] = useState<string>("");
   const [leftKneeSrc, setleftKneeSrc] = useState<string>("");
   const [rightKneeSrc, setrightKneeSrc] = useState<string>("");
+
   useEffect(() => {
     let isMounted = true;
 
@@ -42,26 +94,26 @@ export function BodyUpperLower({data}: {data: IReportDetail}) {
     };
   }, [staticUrl, dynamicUrl, hipDownUrl, leftKneeUrl, rightKneeUrl]);
   const bgUpperCondition = {
-      0: "bg-sub-200",
+      0: "bg-sub-600",
       1: "bg-orangee-600",
       2: "bg-redd-600",
     }[data.result_summary_data.risk_upper_risk_level] ?? "bg-sub-200";
   const textUpperCondition = {
-    0: "text-sub-800",
+    0: "text-white",
     1: "text-white",
     2: "text-white",
-  }[data.result_summary_data.risk_upper_risk_level] ?? "text-sub-800";
+  }[data.result_summary_data.risk_upper_risk_level] ?? "text-white";
 
   const bgLowerCondition = {
-      0: "bg-sub-200",
+      0: "bg-sub-600",
       1: "bg-orangee-600",
       2: "bg-redd-600",
     }[data.result_summary_data.risk_lower_risk_level] ?? "bg-sub-200";
   const textLowerCondition = {
-    0: "text-sub-800",
+    0: "text-white",
     1: "text-white",
     2: "text-white",
-  }[data.result_summary_data.risk_lower_risk_level] ?? "text-sub-800";
+  }[data.result_summary_data.risk_lower_risk_level] ?? "text-white";
 
 
   const jointPositions: Record<string, { top: string; left: string }> = {
@@ -141,13 +193,13 @@ export function BodyUpperLower({data}: {data: IReportDetail}) {
       <div className="grid grid-cols-[1fr_1.5fr_1.5fr]">
         
         <div className="flex flex-col">
-          <div className="h-10 print:h-8 bg-sub-200 py-2 items-center font-bold text-base print:text-[14px] leading-tight border-r border-white">
-            주의 부위
+          <div className="h-10 print:h-8 bg-sub-200 py-2 items-center font-bold text-base print:text-xs leading-tight border-r border-white">
+            {t('basic_caution_area')}
           </div>
           <div className="py-4 px-2 flex flex-col items-center  h-full border-r border-sub-200">
             <div className="flex w-full justify-between text-[10px] px-2">
-              <span className="bg-sub-200/80 px-2 py-0.5 print:py-0 rounded-full">좌측</span>
-              <span className="bg-sub-200/80 px-2 py-0.5 print:py-0 rounded-full">우측</span>
+              <span className="bg-sub-200/80 px-2 py-0.5 print:py-0 rounded-full">{t('left')}</span>
+              <span className="bg-sub-200/80 px-2 py-0.5 print:py-0 rounded-full">{t('right')}</span>
             </div>
             <div className="relative flex justify-center items-center ">
               {/* 베이스 인체 더미 이미지 */}
@@ -193,16 +245,16 @@ export function BodyUpperLower({data}: {data: IReportDetail}) {
         {/* 2. 상지 측정 요약 */}
         <div className="flex flex-col">
           {/* 헤더 */}
-          <div className="h-10 print:h-8 bg-sub-200 py-2 px-4 flex justify-between items-center leading-tight border-r border-white">
-            <span className="font-bold print:text-[14px]  mx-auto translate-x-6">상지 측정 요약</span>
+          <div className={`h-10 print:h-8 bg-sub-200 py-2 ${locale.startsWith("ko") ? "px-4": "px-2 print-px-1"} flex justify-between items-center leading-tight border-r border-white`}>
+            <span className={`font-bold print:text-xs  mx-auto translate-x-6`}>{t('basic_upper_summary')}</span>
             <span className={`${bgUpperCondition} ${textUpperCondition} text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0`}>
-              {riskUpperString} {data.result_summary_data.risk_upper_range_level}단계
+              {riskUpperString} {data.result_summary_data.risk_upper_range_level}{t('basic_level')}
             </span>
           </div>
           {/* 콘텐츠 영역 */}
           <div className="p-4 text-start flex flex-col h-full overflow-y-auto border-r border-sub-200 whitespace-pre-line leading-tight ">
-            {data.result_summary_data.risk_upper_ment ? (
-              data.result_summary_data.risk_upper_ment
+            {ments.upperMent ? (
+              ments.upperMent
                 .split(/(\[[^\]]+\])/g)
                 .map((part, index) => {
                   
@@ -233,15 +285,15 @@ export function BodyUpperLower({data}: {data: IReportDetail}) {
         {/* 3. 하지 측정 요약 */}
         <div className="flex flex-col">
           {/* 헤더 */}
-          <div className="h-10 print:h-8 bg-sub-200 py-2 px-4 flex justify-between items-center leading-tight ">
-            <span className="font-bold print:text-[14px]  mx-auto translate-x-6">하지 측정 요약</span>
+          <div className={`h-10 print:h-8 bg-sub-200 py-2 ${locale.startsWith("ko") ? "px-4": "px-2 print-px-1"} flex justify-between items-center leading-tight border-r border-white`}>
+            <span className="font-bold print:text-xs  mx-auto translate-x-6">{t('basic_lower_summary')}</span>
             <span className={`${bgLowerCondition} ${textLowerCondition} text-white text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0`}>
-              {riskLowerString} {data.result_summary_data.risk_lower_range_level}단계
+              {riskLowerString} {data.result_summary_data.risk_lower_range_level}{t('basic_level')}
             </span>
           </div>
           <div className="p-4 text-start flex flex-col h-full overflow-y-auto whitespace-pre-line leading-tight ">
-            {data.result_summary_data.risk_lower_ment ? (() => {
-              const lines = data.result_summary_data.risk_lower_ment.split('\n');
+            {ments.lowerMent ? (() => {
+              const lines = ments.lowerMent.split('\n');
               const processedLines: string[] = [];
 
               lines.forEach((line) => {
@@ -271,7 +323,7 @@ export function BodyUpperLower({data}: {data: IReportDetail}) {
                 );
               });
             })() : (
-              "측정 데이터가 없습니다."
+              t('basic_no_data')
             )}
           </div>
         </div>
@@ -282,8 +334,8 @@ export function BodyUpperLower({data}: {data: IReportDetail}) {
       <div className="grid grid-cols-[1fr_3fr] ">
         
         <div className="flex flex-col">
-          <div className="h-10 print:h-8 bg-sub-200 py-2 items-center text-center font-bold text-base print:text-[14px] leading-tight border-r border-white">
-            족압 정적 측정
+          <div className="h-10 print:h-8 bg-sub-200 py-2 items-center text-center font-bold text-base print:text-xs leading-tight border-r border-white">
+            {t('basic_foot_static')}
           </div>
           <div className="flex flex-col flex-1 items-center p-2 border-r border-sub-200">
             <div className="relative w-fit h-fit">
@@ -321,16 +373,16 @@ export function BodyUpperLower({data}: {data: IReportDetail}) {
               </span>
             </div>
 
-            <div className="flex flex-col text-[11px] print:text-[9px] leading-tight text-start mt-1">
-              <span className="font-bold text-sub-800">[좌우 무게 분석] <span className="font-bold text-sub-600">{data.static_mat_data.mat_static_horizontal_ment}</span></span>
-              <span className="font-bold text-sub-800">[상하 무게 분석] <span className="font-bold text-sub-600">{data.static_mat_data.mat_static_vertical_ment}</span></span>
+            <div className={`flex flex-col ${locale.startsWith("ko") ? "text-[11px] print:text-[9px]" : "text-[9px] print:text-[7px]"} leading-tight text-start mt-1`}>
+              <span className="font-bold text-sub-800">[{t('basic_left_right_weight')}] <span className="font-bold text-sub-600">{ments.StaticMatH}</span></span>
+              <span className="font-bold text-sub-800">[{t('basic_up_down_weight')}] <span className="font-bold text-sub-600">{ments.StaticMatV}</span></span>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col">
-          <div className="h-10 print:h-8 bg-sub-200 py-2 items-center text-center font-bold text-base print:text-[14px] leading-tight ">
-            족압 동적 측정
+          <div className="h-10 print:h-8 bg-sub-200 py-2 items-center text-center font-bold text-base print:text-xs leading-tight ">
+            {t('basic_foot_dynamic')}
           </div>
           {/* 동적 족압 이미지 */}
           <div className="grid grid-cols-2 p-2">
@@ -387,9 +439,9 @@ export function BodyUpperLower({data}: {data: IReportDetail}) {
                 </div>
               </div>
 
-              <div className="flex flex-col text-[11px] print:text-[9px] leading-tight text-start mt-1">
-                <span className="font-bold text-sub-800">[좌우 무게 분석] <span className="font-bold text-sub-600">{data.static_mat_data.mat_static_horizontal_ment}</span></span>
-                <span className="font-bold text-sub-800">[상하 무게 분석] <span className="font-bold text-sub-600">{data.static_mat_data.mat_static_vertical_ment}</span></span>
+              <div className={`flex flex-col ${locale.startsWith("ko") ? "text-[11px] print:text-[9px]" : "text-[9px] print:text-[7px]"} leading-tight text-start mt-1`}>
+                <span className="font-bold text-sub-800">[{t('basic_left_right_weight')}] <span className="font-bold text-sub-600">{ments.DynamicMatH}</span></span>
+                <span className="font-bold text-sub-800">[{t('basic_up_down_weight')}] <span className="font-bold text-sub-600">{ments.DynamicMatV}</span></span>
               </div>
             </div>
 
@@ -428,8 +480,8 @@ export function BodyUpperLower({data}: {data: IReportDetail}) {
               </div>
             </div>
 
-            <div className="flex flex-col text-[11px] print:text-[9px] leading-tight text-start mt-1">
-              <span className="font-bold text-sub-800">[무릎 흔들림 분석] <span className="font-bold text-sub-600">{data.dynamic_mat_data.mat_ohs_knee_ment}</span></span>
+            <div className={`flex flex-col ${locale.startsWith("ko") ? "text-[11px] print:text-[9px]" : "text-[9px] print:text-[7px]"} leading-tight text-start mt-1`}>
+              <span className="font-bold text-sub-800">[{t('basic_knee_sway')}] <span className="font-bold text-sub-600">{ments.knee}</span></span>
             </div>
           </div>
 

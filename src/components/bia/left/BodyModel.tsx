@@ -2,11 +2,12 @@
 import img_body from "@/assets/img_body.png"
 import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, ResponsiveContainer } from "recharts";
 import type { IBiaData } from "../../../types/bia";
+import { useTranslation } from "react-i18next";
 
 
 
 export function PentagonChart({ data, isMuscle }: { data: any[]; isMuscle: boolean }) {
-
+  const {t} = useTranslation()
   
   const CustomAngleAxis = ({ payload, x, y }: any) => {
     const item = data.find((d) => d.subject === payload.value);
@@ -49,7 +50,7 @@ export function PentagonChart({ data, isMuscle }: { data: any[]; isMuscle: boole
             py-[2px] leading-none flex items-center justify-center min-w-[40px]
             ${item.status === '표준이상' ? 'bg-accent' : 'bg-sub-400'}
           `}>
-            {item.status}
+            {t(item.status)}
           </div>
         </foreignObject>
       </g>
@@ -99,18 +100,18 @@ export function PentagonChart({ data, isMuscle }: { data: any[]; isMuscle: boole
 };
 
 export default function BodyModel({data} : {data: IBiaData}) {
-
+  const {t} = useTranslation();
   const getStatusLabel = (status: number): string => {
     const statusMap: Record<number, string> = {
-      0: "표준이하",
-      1: "표준",
-      2: "표준이상"
+      0: "bia_below_standard",
+      1: "bia_standard",
+      2: "bia_above_standard"
     };
-
     return statusMap[status] ?? "데이터 없음";
   };
+
   const muscleData = [
-    { subject: "복부", 
+    { subject: t('bia_part_abdomen'), 
       value: data.trunk_muscle_ratio, 
       lastValue: data.most_previous_data.trunk_muscle_ratio,
       fullMark: 150, 
@@ -118,7 +119,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
       percent: data.trunk_muscle_ratio + "%", 
       status: getStatusLabel(data.muscle_std_trunk)
     },
-    { subject: "왼팔", 
+    { subject: t("bia_part_left_arm"), 
       value: data.left_hand_muscle_ratio, 
       lastValue: data.most_previous_data.left_hand_muscle_ratio,
       fullMark: 150, 
@@ -126,7 +127,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
       percent: data.left_hand_muscle_ratio + "%", 
       status: getStatusLabel(data.muscle_std_left_hand)
     },
-    { subject: "왼다리", 
+    { subject: t("bia_part_left_leg"), 
       value: data.left_foot_muscle_ratio, 
       lastValue: data.most_previous_data.left_foot_muscle_ratio,
       fullMark: 150, 
@@ -134,7 +135,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
       percent: data.left_foot_muscle_ratio + "%", 
       status: getStatusLabel(data.muscle_std_left_foot) 
     },
-    { subject: "오른다리", 
+    { subject: t("bia_part_right_leg"), 
       value: data.right_foot_muscle_ratio, 
       lastValue: data.most_previous_data.right_foot_muscle_ratio,
       fullMark: 150, 
@@ -142,7 +143,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
       percent: data.right_foot_muscle_ratio + "%", 
       status: getStatusLabel(data.muscle_std_right_foot) 
     },
-    { subject: "오른팔", 
+    { subject: t("bia_part_right_arm"), 
       value: data.right_hand_muscle_ratio, 
       lastValue: data.most_previous_data.right_hand_muscle_ratio,
       fullMark: 150, 
@@ -153,7 +154,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
   ];
 
   const fatData = [
-    { subject: "복부", 
+    { subject: t("bia_part_abdomen"), 
       value: data.trunk_fat_percentage, 
       lastValue: data.most_previous_data.trunk_fat_percentage,
       fullMark: 350, 
@@ -161,7 +162,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
       percent: data.trunk_fat_percentage + "%", 
       status: getStatusLabel(data.fat_std_trunk)
     },
-    { subject: "왼팔", 
+    { subject: t("bia_part_left_arm"), 
       value: data.left_hand_fat_percentage, 
       lastValue: data.most_previous_data.left_hand_fat_percentage,
       fullMark: 300, 
@@ -169,7 +170,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
       percent: data.left_hand_fat_percentage + "%", 
       status: getStatusLabel(data.fat_std_left_hand) 
     },
-    { subject: "왼다리", 
+    { subject: t("bia_part_left_leg"), 
       value: data.left_foot_fat_percentage, 
       lastValue: data.most_previous_data.left_foot_fat_percentage,
       fullMark: 300, 
@@ -177,7 +178,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
       percent: data.left_foot_fat_percentage + "%", 
       status: getStatusLabel(data.fat_std_left_foot) 
     },
-    { subject: "오른다리", 
+    { subject: t("bia_part_right_leg"), 
       value: data.right_foot_fat_percentage, 
       lastValue: data.most_previous_data.right_foot_fat_percentage,
       fullMark: 300, 
@@ -185,7 +186,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
       percent: data.right_foot_fat_percentage + "%", 
       status: getStatusLabel(data.fat_std_right_foot) 
     },
-    { subject: "오른팔", 
+    { subject: t("bia_part_right_arm"), 
       value: data.right_hand_fat_percentage, 
       lastValue: data.most_previous_data.right_hand_fat_percentage,
       fullMark: 300, 
@@ -193,7 +194,6 @@ export default function BodyModel({data} : {data: IBiaData}) {
       percent: data.right_hand_fat_percentage + "%", 
       status: getStatusLabel(data.fat_std_right_hand) 
     },
-
   ];
 
 
@@ -203,7 +203,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
         <div className='flex justify-between '>
           <div className='flex gap-1 pl-1 pt-1 items-center'>
             <div className='w-3 h-3 rounded-[3px] bg-accent' />
-            <span className='text-accent font-bold text-sm'>근육 분포</span>
+            <span className='text-accent font-bold text-sm'>{t('bia_muscle_distribution')}</span>
           </div>
         </div>
         
@@ -216,7 +216,7 @@ export default function BodyModel({data} : {data: IBiaData}) {
         <div className='flex justify-between '>
           <div className='flex gap-1 pl-1 pt-1 items-center'>
             <div className='w-3 h-3 rounded-[3px] bg-accent' />
-            <span className='text-accent font-bold text-sm'>지방 분포</span>
+            <span className='text-accent font-bold text-sm'>{t('bia_fat_distribution')}</span>
           </div>
         </div>
 

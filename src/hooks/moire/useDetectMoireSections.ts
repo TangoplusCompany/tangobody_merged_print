@@ -8,7 +8,7 @@ export interface IMoireSectionData {
 export const DUMMY_SECTION_DATA: IMoireSectionData = {
   lineXPercent: 50,
   lineYPercents: [16, 28, 40, 55], 
-  labels: ["횡단면1(어깨,흉부)", "횡단면2(허리)", "횡단면3(골반)"],
+  labels: ["moire_upper_torso", "moire_lower_torso", "moire_upper_lower_body"],
 };
 export function useDetectMoireSections(imageUrl: string | null) {
   const [sectionData, setSectionData] = useState<IMoireSectionData | undefined>(undefined);
@@ -88,7 +88,7 @@ export function useDetectMoireSections(imageUrl: string | null) {
           setSectionData({
             lineXPercent: 50,
             lineYPercents: [16, 28, 40, 55],
-            labels: ["목~명치 영역", "명치~배꼽 영역", "배꼽~허벅지 영역"],
+            labels: ["moire_upper_torso", "moire_lower_torso", "moire_upper_lower_body"],
           });
           setIsLoading(false);
         }
@@ -142,7 +142,7 @@ export function useDetectMoireSections(imageUrl: string | null) {
         setSectionData({
           lineXPercent: pX,
           lineYPercents: [p1, p2, p3, p4],
-          labels: ["상체 상부(목~명치)", "상체 하부(명치~배꼽)", "하체 상부(배꼽~허벅지)"],
+          labels: ["moire_upper_torso", "moire_lower_torso", "moire_upper_lower_body"],
         });
         setIsLoading(false);
       }

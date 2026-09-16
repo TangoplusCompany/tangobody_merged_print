@@ -2,8 +2,10 @@
 import type { IBasicCards, IBasicHistoryUnit, IReportDetail } from "../../types/basic";
 import { getRangeCircle } from "../../utils/getRiskString";
 import qr_my_tangobody from "../../assets/qr_my_tangobody.png"
+import { useTranslation } from "react-i18next";
 
 export function Graph({ data }: { data: IReportDetail }) {
+  const {t} = useTranslation();
   function getBgColor(riskLevel: number): string {
     const colorMap: Record<number, string> = {
       0: "bg-sub-100 text-sub-200", // 정상 혹은 낮은 단계
@@ -16,12 +18,12 @@ export function Graph({ data }: { data: IReportDetail }) {
   }
 
   const bodyParts: { key: keyof IBasicCards; label: string }[] = [
-    { key: "neck", label: "목" },
-    { key: "shoulder", label: "어깨" },
-    { key: "elbow", label: "팔꿈치" },
-    { key: "hip", label: "골반" },
-    { key: "knee", label: "무릎" },
-    { key: "ankle", label: "발목" },
+    { key: "neck", label: "basic_neck" },
+    { key: "shoulder", label: "basic_shoulder" },
+    { key: "elbow", label: "basic_elbow" },
+    { key: "hip", label: "basic_pelvis" },
+    { key: "knee", label: "basic_knee" },
+    { key: "ankle", label: "basic_ankle" },
   ];
 
   const historyList = [...(data.result_history_data?.history_data || [])]
@@ -38,7 +40,7 @@ export function Graph({ data }: { data: IReportDetail }) {
       <div className="flex flex-col w-full">
         <div className="grid grid-cols-[1fr_4fr] items-center border-b border-sub-200">
           <div className="h-8 print:h-6 font-bold flex items-center bg-sub-200 justify-center text-sub-800 text-[12px] print:text-[10px] border-r border-sub-200">
-            측정 이력
+            {t('basic_history')}
           </div>
           <div className="grid grid-cols-10 h-8 print:h-6 items-center text-center text-[8px] text-gray-500 bg-sub-100">
             {gridSlots.map((_, idx) => {
@@ -75,7 +77,7 @@ export function Graph({ data }: { data: IReportDetail }) {
               {/* 좌측 부위 명칭 */}
               {/* 💡 2. 내부의 border-b와 last:border-b-0은 완전히 제거합니다. */}
               <div className="flex items-center h-full justify-center text-sub-600 text-[11px] print:text-[9px] border-r border-sub-200 font-bold">
-                {label}
+                {t(label)}
               </div>
               
               {/* 우측 부위별 10개 데이터 그리드 */}
@@ -114,7 +116,7 @@ export function Graph({ data }: { data: IReportDetail }) {
       {/*  체형 유형 분석 */}
       <div className="flex flex-col w-full h-full">
         <div className="h-10 print:h-8 font-bold flex items-center bg-sub-200 justify-center text-sub-800 text-[12px] print:text-[10px] border-r border-sub-200">
-          더 많은 결과 확인하기
+          {t('basic_see_more')}
         </div>
         <div className="flex gap-1 h-full w-full items-center px-2">
           <div className="flex flex-col gap-0.5 items-center">
@@ -126,7 +128,7 @@ export function Graph({ data }: { data: IReportDetail }) {
             <span className="text-[10px] text-semibold text-sub-400">https://my.tangobody.co.kr</span>
           </div>
           <div className="flex items-center  text-sub-800 text-base print:text-xs pr-1 text-start leading-tight">
-            QR코드를 스캔 해보세요.<br/>지난 검사 기록들을 확인하고 비교해볼 수 있습니다.
+            {t('basic_qr_desc')}
           </div>
         </div>
       </div>

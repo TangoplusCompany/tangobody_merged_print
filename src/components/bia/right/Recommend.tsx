@@ -2,12 +2,14 @@ import ic_nutrition from "@/assets/ic_nutrition.png"
 import ic_exercise from "@/assets/ic_exercise.png"
 import ic_habit from "@/assets/ic_habit.png"
 import type { IRecommend } from "../../../types/bia";
+import { useTranslation } from "react-i18next";
 export function RecommendCard ({type, title, description} : {type: string, title: string, description: string}) {
   const iconMap: Record<string, string> = {
-    "영양처방": ic_nutrition,
-    "운동처방": ic_exercise,
-    "생활습관": ic_habit,
+    "bia_rx_nutrition": ic_nutrition,
+    "bia_rx_exercise": ic_exercise,
+    "bia_rx_habit": ic_habit,
   };
+  const {t} = useTranslation()
   return (
     <div className="flex w-full gap-2">
       <div className="h-20 w-20 print:w-14 print:h-14 aspect-square rounded-[4px] bg-sub-100 border items-center flex justify-center border-sub-200">
@@ -16,7 +18,7 @@ export function RecommendCard ({type, title, description} : {type: string, title
       <div className="flex flex-col gap-1 w-full">
         <div className="flex w-full justify-between items-center">
           <span className="text-xs font-bold text-blackk ">{title}</span>
-          <div className="px-1 rounded-[4px] bg-accent text-[9px] text-white">{type}</div>
+          <div className="px-1 rounded-[4px] bg-accent text-[9px] text-white">{t(type)}</div>
         </div>
 
         <div className="text-[10px] text-start leading-tight text-sub-600">
@@ -30,20 +32,20 @@ export function RecommendCard ({type, title, description} : {type: string, title
 
 
 export default function Recommend({data}: {data: IRecommend}) {
-  
+  const {t} = useTranslation()
   const types = [
     {
-        type: "영양처방",
+        type: "bia_rx_nutrition",
         title: data.result_nutrition_title,
         description: data.result_nutrition_description
     },
     {
-        type: "운동처방",
+        type: "bia_rx_exercise",
         title: data.result_exercise_title,
         description: data.result_exercise_description
     },
     {
-        type: "생활습관",
+        type: "bia_rx_habit",
         title: data.result_habits_title,
         description: data.result_habits_description
     },
@@ -55,7 +57,7 @@ export default function Recommend({data}: {data: IRecommend}) {
       <div className="flex gap-2 items-center text-accent font-bold">
         <div className="w-3 h-3 rounded-[3px] bg-accent" />
         <div className="text-accent font-bold text-sm ">
-          체중조절/처방
+          {t('bia_weight_control_rx')}
         </div>
       </div>
 

@@ -9,9 +9,12 @@ import Recommend from "./right/Recommend";
 import BodyTypeChart from "./right/BodyTypeChart";
 import TrendGraph from "./left/TrendGraph";
 import type { IAppProps } from "../basic/BasicApp";
+import { useTranslation } from "react-i18next";
 
 
 export function BiaApp({ t_r }: IAppProps) {
+  const {t, i18n} = useTranslation();
+  const isKo = i18n.language.startsWith("ko");
   const { mutate, data, isPending, isError } = usePostBiaData();
   const encryptData = async () => {
     
@@ -29,11 +32,11 @@ export function BiaApp({ t_r }: IAppProps) {
       mutate(t_r);
     }
   }, [mutate, t_r]);
-  if (isPending) return <div className="flex h-screen items-center justify-center">로딩 중...</div>;
+  if (isPending) return <div className="flex h-screen items-center justify-center">{t('loading')}</div>;
   if (!t_r || isError || (data === undefined)) {
     return (
       <div className="print:hidden flex flex-col h-screen items-center justify-center gap-4">
-        <div className="text-xl font-bold text-red-500">올바르지 않은 데이터입니다.</div>
+        <div className="text-xl font-bold text-red-500">{t('invalid_data')}</div>
       </div>
     );
   }
@@ -49,16 +52,16 @@ export function BiaApp({ t_r }: IAppProps) {
           <div className='justify-center px-3 bg-white flex flex-col rounded-[2px] text-[12px] text-center'>
             
             <div className='flex gap-8'>
-              <span>이름: {data.user_name}</span>
-              <span>성별: {data.br_input_gender === 0 ? "여성" : "남성"}</span>
-              <span>신장: {data.br_input_height}cm</span>
-              <span>나이: 만 {data.br_input_age}세</span>
+              <span>{t('name')}: {data.user_name}</span>
+              <span>{t('gender')}: {data.br_input_gender === 0 ? t('female') : t('male')}</span>
+              <span>{t('height')}: {data.br_input_height}cm</span>
+              <span>{isKo ? `나이: 만 ${data.br_input_age}세` : `Age: ${data.br_input_age}`}</span>
             </div>
             <div className='h-[1px] w-full bg-sub-400'></div>
             <div className='flex gap-4 justify-center '>
-              <span>현재 검사일: {data.measure_date?.replace(/-/g, ".").slice(0, 11)} </span>
+              <span>{t('current_test_date')}: {data.measure_date?.replace(/-/g, ".").slice(0, 11)} </span>
               <span>
-                이전 검사일: {data.most_previous_data?.measure_date ? `${data.most_previous_data.measure_date.replace(/-/g, ".").slice(0, 11)}` : '미실시'}
+                {t('previous_test_date')}: {data.most_previous_data?.measure_date ? `${data.most_previous_data.measure_date.replace(/-/g, ".").slice(0, 11)}` : t('not_conducted')}
               </span>
             </div>
             

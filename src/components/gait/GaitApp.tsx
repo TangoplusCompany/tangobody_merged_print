@@ -7,8 +7,10 @@ import logoWhite from '../../assets/logo_white.png';
 import type { IGaitInfo } from "../../types/gait";
 import { usePostGaitData } from "../../hooks/gait/usePostGaitData";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-export function GaitApp({ t_r }: IAppProps) { //
+export function GaitApp({ t_r }: IAppProps) {
+  const {t} = useTranslation()
   const { mutate, data, isPending, isError } = usePostGaitData();
   
   const encryptData = async () => {
@@ -27,11 +29,11 @@ export function GaitApp({ t_r }: IAppProps) { //
       mutate(t_r);
     }
   }, [mutate, t_r]);
-  if (isPending) return <div className="flex h-screen items-center justify-center">로딩 중...</div>;
+  if (isPending) return <div className="flex h-screen items-center justify-center">{t('loading')}</div>;
   if (!t_r || isError || (data === undefined)) {
     return (
       <div className="print:hidden flex flex-col h-screen items-center justify-center gap-4">
-        <div className="text-xl font-bold text-red-500">올바르지 않은 데이터입니다.</div>
+        <div className="text-xl font-bold text-red-500">{t('invalid_data')}</div>
       </div>
     );
   }
@@ -47,9 +49,9 @@ export function GaitApp({ t_r }: IAppProps) { //
           <div className='justify-center px-3 bg-white flex flex-col rounded-[2px] text-[12px] text-center'>
             
             <div className='flex gap-8'>
-              <span>이름: {result.user_info.user_name}</span>
-              <span>성별: {result.user_info.gender === "남성" ? "남성" : "여성"}</span>
-              <span>현재 검사일: {result.gait_measure_info.measure_date?.replace(/-/g, ".").slice(0, 11)} </span>
+              <span>{t('name')}: {result.user_info.user_name}</span>
+              <span>{t('gender')}: {result.user_info.gender === "남성" ? t('male') : t('female')}</span>
+              <span>{t('current_test_date')}: {result.gait_measure_info.measure_date?.replace(/-/g, ".").slice(0, 11)} </span>
             </div>
           </div>
         )}

@@ -1,12 +1,13 @@
+import { useTranslation } from "react-i18next";
 import type { IBiaData } from "../../../types/bia";
 
 
 const CATEGORIES = [
-  { id: 'score', label: '통합점수', unit: '점' },
-  { id: 'sarcopenia', label: '근감소증 수치', unit: '%' },
-  { id: 'weight', label: '몸무게', unit: 'kg' },
-  { id: 'skeletal', label: '골격근량', unit: 'kg' },
-  { id: 'fat', label: '지방량', unit: 'kg' },
+  { id: 'score', label: 'bia_cat_score', unit: '점' },
+  { id: 'sarcopenia', label: 'bia_cat_sarcopenia', unit: '%' },
+  { id: 'weight', label: 'bia_cat_weight', unit: 'kg' },
+  { id: 'skeletal', label: 'bia_cat_skeletal', unit: 'kg' },
+  { id: 'fat', label: 'bia_cat_fat', unit: 'kg' },
 ];
 
 const transformToTrend = (
@@ -51,6 +52,8 @@ const transformToTrend = (
 
 // 2. 개별 데이터 셀 컴포넌트
 const DataCell = ({ value, diff, status, unit, up }: { value: string, diff: string, status: string, unit: string, up: boolean }) => {
+  const {i18n} = useTranslation()
+  const isKo = i18n.language.startsWith("ko")
   const colorClass = 
     status === 'red' ? ' text-redd-600' : 
     status === 'blue' ? ' text-accent' :
@@ -58,7 +61,7 @@ const DataCell = ({ value, diff, status, unit, up }: { value: string, diff: stri
 
   return (
     <div className={`flex flex-col items-center justify-center rounded-sm py-1 px-1 w-full min-w-[40px] h-[28px] leading-none ${colorClass}`}>
-      <span className="text-[9px] font-bold leading-tight">{value}{unit}</span>
+      <span className="text-[9px] font-bold leading-tight">{value}{unit === "점" ? (isKo ? "점" : "") : `${unit}`}</span>
       <div className="flex items-center gap-0.5 text-[7px] mt-1">
         <span>{up ? '▲' : '▼'}</span>
         <span>{diff}</span>
@@ -68,6 +71,8 @@ const DataCell = ({ value, diff, status, unit, up }: { value: string, diff: stri
 };
 
 export default function TrendGraph({data}: {data:IBiaData}) {
+  const {t, i18n} = useTranslation()
+  const isKo = i18n.language.startsWith("ko")
   const sortedHistory = [...data.history_data];
   const dates = sortedHistory.map((h) => h.measure_date).slice(0, 7).reverse();
   const TREND_DATA = {
@@ -80,14 +85,11 @@ export default function TrendGraph({data}: {data:IBiaData}) {
   return (
     <div className="flex flex-col w-full bg-white">
       <div className="flex justify-between items-center ">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justfy-center gap-2">
           <div className="w-3 h-3 bg-accent rounded-[4px]" />
-          <h2 className="text-sm font-bold text-accent">측정 이력</h2>
+          <span className="text-sm font-bold text-accent">{t('basic_history')}</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 bg-sub-600 rounded-[2px]" />
-          <span className="text-[10px] text-gray-500 font-medium">최근이력</span>
-        </div>
+        
       </div>
 
       <div className="flex justify-center h-full items-center">
@@ -108,8 +110,8 @@ export default function TrendGraph({data}: {data:IBiaData}) {
               <div key={cat.id} className="grid grid-cols-[80px_repeat(7,1fr)] gap-0.5 items-center">
                 {/* 왼쪽 카테고리 라벨 */}
                 <div className="flex flex-col items-center justify-center bg-gray-100 rounded-sm h-[28px] text-center leading-tight">
-                  <span className="text-[9px] font-bold text-gray-700 leading-tight">{cat.label}</span>
-                  <span className="text-[7px] text-gray-500 font-medium">({cat.unit})</span>
+                  <span className="text-[9px] font-bold text-gray-700 leading-tight">{t(cat.label)}</span>
+                  <span className="text-[7px] text-gray-500 font-medium">{cat.unit === "점" ? (isKo ? "점" : "") : `(${cat.unit})`}</span>
                 </div>
 
                 {/* 해결책: 항상 7번 루프를 돕니다 */}

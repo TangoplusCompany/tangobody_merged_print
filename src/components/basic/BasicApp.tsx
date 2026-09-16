@@ -4,6 +4,7 @@ import logoWhite from '../../assets/logo_white.png';
 import { BodyUpperLower } from './BodyUpperLower';
 import { PartRawDataContainer } from './PartRawDataContainer';
 import { Graph } from './Graph';
+import { useTranslation } from 'react-i18next';
 
 
 export interface IAppProps {
@@ -11,6 +12,7 @@ export interface IAppProps {
 }
 
 export function BasicApp({ t_r }: IAppProps) {
+  const { t } = useTranslation();
   const { mutate, data, isPending, isError } = usePostBasicData();
   const encryptData = async () => {
   };
@@ -20,11 +22,11 @@ export function BasicApp({ t_r }: IAppProps) {
       mutate(t_r);
     }
   }, [mutate, t_r]);
-  if (isPending) return <div className="flex h-screen items-center justify-center">로딩 중...</div>;
+  if (isPending) return <div className="flex h-screen items-center justify-center">{t('loading')}</div>;
   if (!t_r || isError || (data === undefined)) {
     return (
       <div className="print:hidden flex flex-col h-screen items-center justify-center gap-4">
-        <div className="text-xl font-bold text-red-500">올바르지 않은 데이터입니다.</div>
+        <div className="text-xl font-bold text-red-500">{t('invalid_data')}</div>
       </div>
     );
   }
@@ -40,9 +42,9 @@ export function BasicApp({ t_r }: IAppProps) {
           <div className='justify-center px-3 bg-white flex flex-col rounded-[2px] text-[12px] text-center'>
             
             <div className='flex gap-8'>
-              <span>이름: {data.result_summary_data.user_name}</span>
-              <span>성별: {data.result_summary_data.gender === "남성" ? "남성" : "여성"}</span>
-              <span>현재 검사일: {data.result_summary_data.measure_date?.replace(/-/g, ".").slice(0, 11)} </span>
+              <span>{t('name')}: {data.result_summary_data.user_name}</span>
+              <span>{t('gender')}: {data.result_summary_data.gender === "남성" ? t('male') : t('female')}</span>
+              <span>{t('current_test_date')}: {data.result_summary_data.measure_date?.replace(/-/g, ".").slice(0, 11)} </span>
             </div>
           </div>
         )}
@@ -58,20 +60,20 @@ export function BasicApp({ t_r }: IAppProps) {
           </div>
           <div className='grid grid-cols-[60%_40%]'>
             <div className='text-sub-400 text-[10px] text-start leading-[1.5]'>
-              위험과 주의 신호는 골격의 변형으로만 판단되므로 통증의 유무와 상관없이 근골격계 질환으로 발전될 가능성이 높습니다. 1단계는 약, 2단계는 중, 3단계는 강을 표현합니다. 
+              {t('basic_risk_warning_desc')}
             </div>
 
 
             <div className='flex flex-col'>
               <div className='rounded-xl grid grid-cols-[1fr_1fr_1fr] items-center mx-2 font-bold'>
-                <div className='bg-sub-100 border border-white text-center text-[10px] text-sub-600 rounded-l-[8px] py-1'>정상</div>
-                <div className='bg-orangee-500/30 text-center text-[10px] text-orangee-800 py-1'>주의</div>
-                <div className='bg-redd-500/30 text-center text-[10px] text-redd-800 rounded-r-[8px] py-1'>위험</div>
+                <div className='bg-sub-100 border border-white text-center text-[10px] text-sub-600 rounded-l-[8px] py-1'>{t('basic_normal')}</div>
+                <div className='bg-orangee-500/30 text-center text-[10px] text-orangee-800 py-1'>{t('basic_caution')}</div>
+                <div className='bg-redd-500/30 text-center text-[10px] text-redd-800 rounded-r-[8px] py-1'>{t('basic_danger')}</div>
               </div>
               <div className='rounded-xl grid grid-cols-[1fr_1fr_1fr] items-center mx-2 leading-tight'>
-                <span className='text-center text-[9px] text-sub-600'>상태 유지<br/>강화 권장</span>
-                <span className='text-center text-[9px] text-orangee-800'>제공되는<br/>맞춤 운동 권장</span>
-                <span className='text-center text-[9px] text-redd-800 '>전문가 상담<br/>권장</span>
+                <span className='text-center text-[9px] text-sub-600'>{t('basic_rec_maintain')}</span>
+                <span className='text-center text-[9px] text-orangee-800'>{t('basic_rec_exercise')}</span>
+                <span className='text-center text-[9px] text-redd-800 '>{t('basic_rec_consult')}</span>
               </div>
             </div>
           </div>
@@ -88,7 +90,7 @@ export function BasicApp({ t_r }: IAppProps) {
             </div>
           </div>
           <div className='text-sub-400 text-[10px] text-start leading-[1.5]'>
-            통증부위 반대편 골격에 나타나는 위험이나 주의신호는 통증 회피를 윟나 보상작용으로 반대편 골격이 변형되었을 가능성이 높습니다.
+            {t('basic_compensation_desc')}
           </div>
         </div>
       </div>

@@ -1,20 +1,21 @@
+import { useTranslation } from "react-i18next";
 import type { GaitContainerProps } from "./GaitApp";
 
 
 // 1. 위험도 레코드 (뱃지 스타일 및 활성화 바 색상)
 const RISK_RECORD = {
   0: {
-    label: "정상",
+    label: "basic_normal",
     badgeCss: "bg-sub-600",
     activeBarCss: "bg-accent",
   },
   1: {
-    label: "주의",
+    label: "basic_caution",
     badgeCss: "bg-orangee-600",
     activeBarCss: "bg-orangee-600",
   },
   2: {
-    label: "위험",
+    label: "basic_danger",
     badgeCss: "bg-redd-600",
     activeBarCss: "bg-redd-600",
   },
@@ -53,7 +54,7 @@ export interface ParameterItem {
   rightValue?: string;
 }
 function GaitItem({ item }: { item: ParameterItem }) {
-  // 💡 risk 값이 넘어오지 않거나 자동 계산이 필요한 경우 수치 기반으로 판정
+  const {t} = useTranslation()
   const calculatedRisk = getRiskFromValue(item.value, item.threshold0, item.threshold1);
   const riskKey = item.risk ?? calculatedRisk;
   const riskInfo = RISK_RECORD[riskKey as keyof typeof RISK_RECORD] || RISK_RECORD[0];
@@ -72,12 +73,12 @@ function GaitItem({ item }: { item: ParameterItem }) {
     <div className="flex flex-col justify-center w-full h-full bg-sub-100 rounded-[6px] px-2 py-2 print:py-1 mb-4 print:mb-2">
       {/* 헤더 */}
       <div className="flex justify-between items-center">
-        <span className="text-sm print:text-xs font-semibold text-sub-800">{item.title}</span>
+        <span className="text-sm print:text-xs font-semibold text-sub-800">{t(item.title)}</span>
         
         <div className="flex gap-1 items-center mb-2 print:mb-0">
           <span className="text-sm print:text-xs text-sub-800 font-semibold">{item.value.toFixed(1)}{item.unit}</span>
           <span className={`px-1.5 py-1 rounded-full text-xs text-white text-center whitespace-normal break-keep ${riskInfo.badgeCss}`}>
-            {riskInfo.label}
+            {t(riskInfo.label)}
           </span>
         </div>
       </div>
@@ -125,9 +126,10 @@ function GaitItem({ item }: { item: ParameterItem }) {
 }
 
 export default function GaitParameter({ data }: GaitContainerProps) {
+  const {t} = useTranslation()
   const gaitItems: ParameterItem[] = [
     {
-      title: "보행 속도(Gait Speed)",
+      title: "gait_speed_title",
       risk: Number(data?.resultSpeedRisk ?? 0),
       value: data?.avgOverallStepSpeed ?? 1.1,
       threshold0: 0.8,
@@ -137,7 +139,7 @@ export default function GaitParameter({ data }: GaitContainerProps) {
       rightValue: `${data?.avgRightStepSpeed.toFixed(1) ?? 1.2} m/s`,
     },
     {
-      title: "평균 보폭(Step Length)",
+      title: "gait_step_length_title",
       risk: Number(data?.resultStepLengthRisk ?? 0),
       value: data?.averageStepLength ?? 0.65,
       threshold0: 0.5,
@@ -147,7 +149,7 @@ export default function GaitParameter({ data }: GaitContainerProps) {
       rightValue: `${data?.avgRightStepLength.toFixed(1) ?? 0.65} m`,
     },
     {
-      title: "평균 활보장(Stride Length)",
+      title: "gait_stride_length_title",
       risk: Number(data?.resultStrideLengthRisk ?? 1),
       value: data?.avgLeftStrideLength ?? 0.6,
       threshold0: 1.0,
@@ -157,7 +159,7 @@ export default function GaitParameter({ data }: GaitContainerProps) {
       rightValue: `${data?.avgRightStrideLength.toFixed(1) ?? 0.5} m`,
     },
     {
-      title: "케이던스(Cadence)",
+      title: "gait_cadence_title",
       risk: 0,
       value: data?.cadence ?? 95,
       threshold0: 90,
@@ -170,8 +172,8 @@ export default function GaitParameter({ data }: GaitContainerProps) {
     <div className="flex flex-col gap-1 w-full p-2 bg-white rounded-[6px] border border-sub-200">
       <div className="flex items-center gap-2 ">
         <div className="bg-accent w-3 h-3 rounded-[4px]"/>
-        <div className="text-accent text-sm font-bold ">
-          03 보행 분석 파라미터
+        <div className="text-accent print:text-xs  text-sm font-bold ">
+          {t('gait_section_params')}
         </div>
       </div>
       <div className="grid grid-rows-4 gap-1 h-full">

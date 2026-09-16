@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { IBiaData } from "../../../types/bia";
 
 interface AnalysisHorizonCardProps {
@@ -9,7 +10,7 @@ interface AnalysisHorizonCardProps {
 
 
 export function AnalysisHorizonCard({ title, value, low, high }: AnalysisHorizonCardProps) {
-  
+  const {t} = useTranslation()
   
   const calculatePosition = (val: number) => {
     if (val <= 0) return 0;
@@ -62,7 +63,7 @@ export function AnalysisHorizonCard({ title, value, low, high }: AnalysisHorizon
     <div className="flex h-full items-center gap-1 w-full ">
       {/* 타이틀 박스 */}
       <div className={`flex items-center h-full p-2 w-14 text-[10px] leading-tight font-bold text-white rounded-[4px] justify-center bg-sub-300`}>
-        {title}
+        {t(title)}
       </div>
 
       {/* 메인 데이터 영역 */}
@@ -107,16 +108,16 @@ interface IAnalysisCardProps {
   label: string;
   value: number;
   unit: string;
-  grade: number; // 0: 낮음, 1: 보통, 2: 높음
+  grade: number;
 }
 
-const labelMap = { 1: "보통", 2: "주의", 3: "위험" };
+const labelMap = { 1: "bia_normal", 2: "bia_caution", 3: "bia_danger" };
 const labelBgMap = { 1: "bg-sub-300", 2: "bg-orangee-500", 3: "bg-redd-500" };
 const AnalysisCard = ({ label, value, unit, grade }: IAnalysisCardProps) => {
   const statusLabel = labelMap[grade as keyof typeof labelMap];
-
+  const {t} = useTranslation()
   return (
-    <div className="bg-sub-100 border border-sub-200 rounded-[3px] py-1 flex flex-col items-center gap-1 leading-[2.0]">
+    <div className="bg-sub-100 border border-sub-200 rounded-[3px] py-1 flex flex-col items-center gap-1 leading-[1.5]">
       {/* 라벨 */}
       <span className="text-[10px] font-bold text-sub-800 mb-0.5">{label}</span>
       
@@ -136,7 +137,7 @@ const AnalysisCard = ({ label, value, unit, grade }: IAnalysisCardProps) => {
 
       {/* 하단 등급 표시 */}
       <div className={`mt-0.5 px-1 ${labelBgMap[grade as keyof typeof labelMap]} rounded-[3px] text-white text-[10px] font-bold text-center`}>
-        {statusLabel}
+        {t(statusLabel)}
       </div>
     </div>
   );
@@ -150,6 +151,7 @@ export default function MainAnalysis({
   data: IBiaData
   prevMuscleMassIndex?: number
 }) {
+  const {t} = useTranslation()
   const typeInitial = ({
     0: "C",
     1: "I",
@@ -157,10 +159,10 @@ export default function MainAnalysis({
     3: "U"
   } as const)[data.result_cid_type as 0 | 1 | 2 | 3];
   const typeTitle = ({
-    0: "C형 근감소성 비만",
-    1: "I형 완전표준형",
-    2: "D형 비만",
-    3: "U형 불균형"
+    0: t('bia_type_cid_0'),
+    1: t('bia_type_cid_1'),
+    2: t('bia_type_cid_2'),
+    3: t('bia_type_cid_3')
   } as const)[data.result_cid_type as 0 | 1 | 2 | 3];
   const diffMuscleMassIndex = data.skeletal_muscle_mass_index - (prevMuscleMassIndex ? prevMuscleMassIndex : data.skeletal_muscle_mass_index)
   // const statusLabel = labelMap[data. as keyof typeof labelMap];
@@ -200,20 +202,20 @@ const muscleMassIndex = (() => {
         </div>
 
         <div className="flex flex-col ">
-          <div className="grid grid-cols-4 text-[8px] text-center text-sub-600 ml-16 mb-2 flex items-center">
-            <span className="leading-none">체성분<br/> 밸런스</span>
-            <span>표준 이하</span>
-            <span>표준</span>
-            <span>표준 이상</span>
+          <div className="grid grid-cols-4 text-[8px] text-center text-sub-600 ml-16 mb-2 print:mb-1 items-center">
+            <span className="leading-none">{t('bia_composition_balance')}</span>
+            <span>{t('bia_below_standard')}</span>
+            <span>{t('bia_standard')}</span>
+            <span>{t('bia_above_standard')}</span>
 
           </div>
 
 
           <div className="grid grid-rows-3 gap-2 h-full">
             {[
-              { label: "체중", value: data.weight, low: data.weight_std_min, high: data.weight_std_max }, // 0, 1, 2 중 하나
-              { label: "골격근", value: data.skeletal_muscle_mass, low: data.skeletal_muscle_mass_std_min, high: data.skeletal_muscle_mass_std_max }, 
-              { label: "체지방", value: data.body_fat_mass, low: data.body_fat_mass_std_min, high: data.body_fat_mass_std_max },
+              { label: "bia_weight", value: data.weight, low: data.weight_std_min, high: data.weight_std_max }, // 0, 1, 2 중 하나
+              { label: "bia_skeletal_muscle", value: data.skeletal_muscle_mass, low: data.skeletal_muscle_mass_std_min, high: data.skeletal_muscle_mass_std_max }, 
+              { label: "bia_body_fat_mass", value: data.body_fat_mass, low: data.body_fat_mass_std_min, high: data.body_fat_mass_std_max },
             ].map((item,) => {
             
               return (
@@ -229,7 +231,7 @@ const muscleMassIndex = (() => {
             <div className="flex items-center gap-2 ">
               <div className="w-3 h-3 rounded-[3px] bg-accent" />
               <div className="text-accent font-bold text-sm">
-                근감소 수치
+                {t('bia_sarcopenia_level')}
               </div>
             </div>
 
@@ -238,16 +240,16 @@ const muscleMassIndex = (() => {
               {/* 수치 */}
               <div className="flex flex-col text-center">
                 <span className="text-sm font-bold text-sub-800">{data.skeletal_muscle_mass_index.toFixed(1)}</span>
-                <span className="text-[10px] font-bold text-sub-800">(이전 대비 {-diffMuscleMassIndex.toFixed(1)})</span>
+                <span className="text-[10px] font-bold text-sub-800">({t('bia_previous')} {-diffMuscleMassIndex.toFixed(1)})</span>
               </div>
 
               {/* 게이지 바 */}
               <div className="flex flex-col w-48 gap-2">
                 {/* 상단 라벨 영역: justify-between으로 양 끝과 중앙 배치 */}
                 <div className="flex justify-between w-full px-0.5">
-                  <span className="text-[9px] font-bold text-gray-400">평균이하</span>
-                  <span className="text-[9px] font-bold text-gray-400">평균</span>
-                  <span className="text-[9px] font-bold text-gray-400">평균이상</span>
+                  <span className="text-[9px] font-bold text-gray-400">{t('bia_avg_below')}</span>
+                  <span className="text-[9px] font-bold text-gray-400">{t('bia_avg_normal')}</span>
+                  <span className="text-[9px] font-bold text-gray-400">{t('bia_avg_above')}</span>
                 </div>
 
                 {/* 게이지 바 영역 */}
@@ -271,31 +273,31 @@ const muscleMassIndex = (() => {
 
         <div className="grid grid-cols-3 grid-rows-2 gap-2 pt-2">
           <AnalysisCard 
-            label="골격근량" 
+            label={t('bia_skeletal_muscle_mass')}
             value={data.skeletal_muscle_mass} 
             unit="kg" 
             grade={data.result_skeletal_muscle_mass_grade} 
           />
           <AnalysisCard 
-            label="내장지방" 
+            label={t('bia_visceral_fat')}
             value={data.visceral_fat_level} 
             unit="" 
             grade={data.result_visceral_fat_level_grade} 
           />
           <AnalysisCard 
-            label="세포외 수분비" 
+            label={t('bia_ecw_ratio')}
             value={data.extracellular_water_volume} 
             unit="" 
             grade={data.result_extracellular_water_grade} 
           />
           <AnalysisCard 
-            label="체지방률" 
+            label={t('bia_body_fat_pct')}
             value={data.body_fat_percentage} 
             unit="%" 
             grade={data.result_body_fat_percentage_grade} 
           />
           <AnalysisCard 
-            label="기초대사량" 
+            label={t('bia_bmr')}
             value={data.basal_metabolism_kcal} 
             unit="kcal" 
             grade={data.result_basal_metabolism_kcal_grade} 

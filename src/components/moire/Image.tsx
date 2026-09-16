@@ -3,9 +3,11 @@ import type { IMoireSeq } from "../../types/moire";
 import { useMeasureMoireMatJson } from "../../hooks/moire/useMeasureMoireMatJson";
 import { useStaticLandmark } from "../../actions/useStaticLandmark";
 import FootStatic from "./FootStatic";
+import { useTranslation } from "react-i18next";
 
 
 export function SectionOverlay({isFront, sectionData = DUMMY_SECTION_DATA }: {isFront: boolean, sectionData : IMoireSectionData}) {
+  const {t} = useTranslation()
   const { lineYPercents, labels } = sectionData;
 
   return (
@@ -19,10 +21,10 @@ export function SectionOverlay({isFront, sectionData = DUMMY_SECTION_DATA }: {is
       {/* 2. 상단 좌측/우측 뱃지 */}
       <div className="absolute top-8 left-1/2 -translate-x-1/2 flex w-full max-w-[300px] justify-between px-2 z-10">
         <span className="bg-sub-800/50 text-white text-xs px-2.5 py-0.5 rounded-full backdrop-blur-sm">
-          {isFront ? "좌측" : "우측"}
+          {isFront ? t('left') : t('right')}
         </span>
         <span className="bg-sub-800/50 text-white text-xs px-2.5 py-0.5 rounded-full backdrop-blur-sm">
-          {isFront ? "우측" : "좌측"}
+          {isFront ? t('right') : t('left')}
         </span>
       </div>
 
@@ -56,7 +58,9 @@ export function SectionOverlay({isFront, sectionData = DUMMY_SECTION_DATA }: {is
             className="absolute left-1 -translate-y-1/2 bg-sub-800/50 backdrop-blur-sm z-20 rounded-full px-2 "
             style={{ top: `${midY}%` }}
           >
-            <span className="text-white text-xs text-center">{label}</span>
+            <span className="text-white text-xs text-center print:inline-block print:w-32 print:break-words print:leading-tight">
+              {t(label)}
+            </span>
           </div>
         );
       })}
@@ -70,10 +74,10 @@ export interface IMoireImageProps {
 }
 
 export default function MoireImage({ imageData }: { imageData: IMoireImageProps }) {
+  const {t} = useTranslation()
   const fileBaseUrl = import.meta.env.VITE_PUBLIC_FILE_URL ?? "";
   const moireFileName = imageData.data.server_file_name_moire;
 
-  // 슬래시 중복(/data/Results//8-2834...) 방지 처리
   const cleanFileName = moireFileName ? moireFileName.replace(/^\//, "") : "";
   const moireUrl = `${fileBaseUrl.replace(/\/$/, "")}/${cleanFileName}`;
   const matFileName = imageData.data.server_file_name_mat_json;
@@ -90,7 +94,7 @@ export default function MoireImage({ imageData }: { imageData: IMoireImageProps 
         aria-hidden
       />
       <p className="text-sub-400 dark:text-sub300 text-sm font-medium animate-pulse">
-        로딩중입니다
+        {t('loading')}
       </p>
     </div>
   );
@@ -108,7 +112,7 @@ export default function MoireImage({ imageData }: { imageData: IMoireImageProps 
   }
   
   if (jsonError || !matJson) {
-    return <div className="text-red-500">오류가 발생했습니다. Moire 데이터 데이터 누락</div>;
+    return <div className="text-red-500">{t('invalid_data')}</div>;
   }
   const pressures = {
     leftTopPressure: matJson.left_top_weight_pct,
@@ -126,7 +130,7 @@ export default function MoireImage({ imageData }: { imageData: IMoireImageProps 
       
       <div className='flex gap-1 pt-3 items-center'>
         <div className='w-3 h-3 rounded-[3px] bg-accent' />
-        <span className='text-accent font-bold text-sm'>{imageData.isFront ? "모아레 측정(전면)" : "모아레 측정(후면)"}</span>
+        <span className='text-accent font-bold text-sm'>{imageData.isFront ? t('moire_measure_front') : t('moire_measure_back')}</span>
       </div>
 
       <div className="flex flex-1 justify-center w-full rounded-xl mt-1 border-2 border-sub-200">
